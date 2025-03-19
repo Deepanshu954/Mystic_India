@@ -1,0 +1,260 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Font Imports */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* Custom Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 5px rgba(139, 92, 246, 0.5); }
+  100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.8), 0 0 30px rgba(139, 92, 246, 0.6); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -500px 0; }
+  100% { background-position: 500px 0; }
+}
+
+@keyframes transmission {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.3; }
+}
+
+/* Custom Scrollbar - Dark Mode */
+.dark ::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #121212;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.6);
+  border-radius: 6px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.8);
+}
+
+/* Custom Scrollbar - Light Mode */
+.light ::-webkit-scrollbar {
+  width: 6px;
+}
+
+.light ::-webkit-scrollbar-track {
+  background: #fff9f0;
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: rgba(249, 115, 22, 0.4);
+  border-radius: 6px;
+}
+
+.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(249, 115, 22, 0.6);
+}
+
+/* Neo Components - Dark Theme */
+.dark .neo-glass {
+  @apply backdrop-blur-md bg-white/5 border border-white/10 rounded-xl;
+}
+
+.dark .neo-panel {
+  @apply bg-neo-dark/80 border border-white/10 backdrop-blur-md rounded-xl;
+}
+
+.dark .neo-button {
+  @apply px-6 py-2 bg-gradient-to-br from-neo-violet to-neo-indigo hover:from-neo-indigo hover:to-neo-violet text-white rounded-lg transition-all duration-300 shadow-neo-button hover:shadow-neo font-medium;
+}
+
+.dark .neo-input {
+  @apply bg-neo-dark/50 border-white/10 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-neo-violet/50 focus:ring-2 focus:ring-neo-violet/30 transition-all duration-300;
+}
+
+.dark .neo-card {
+  @apply bg-neo-dark/90 border border-white/10 rounded-xl shadow-neo-card overflow-hidden hover:border-neo-violet/30 transition-all duration-300;
+}
+
+/* Saffron Components - Light Theme */
+.light .neo-glass {
+  @apply backdrop-blur-md bg-black/5 border border-black/10 rounded-xl;
+}
+
+.light .neo-panel {
+  @apply bg-white/80 border border-black/10 backdrop-blur-md rounded-xl;
+}
+
+.light .neo-button {
+  @apply px-6 py-2 bg-gradient-to-br from-saffron-500 to-saffron-400 hover:from-saffron-400 hover:to-saffron-500 text-white rounded-lg transition-all duration-300 shadow-saffron-button hover:shadow-saffron font-medium;
+}
+
+.light .neo-input {
+  @apply bg-light-card/50 border-black/10 text-light-text px-4 py-3 rounded-lg focus:outline-none focus:border-saffron-500/50 focus:ring-2 focus:ring-saffron-500/30 transition-all duration-300;
+}
+
+.light .neo-card {
+  @apply bg-white border border-black/10 rounded-xl shadow-light-card overflow-hidden hover:border-saffron-400/50 transition-all duration-300;
+}
+
+@layer components {
+  .neo-gradient-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-r;
+  }
+
+  .dark .neo-gradient-text {
+    @apply from-neo-violet to-neo-indigo;
+  }
+
+  .light .neo-gradient-text {
+    @apply from-saffron-500 to-orange-500;
+  }
+}
+
+.neo-grid-bg {
+  background-image: radial-gradient(rgba(139, 92, 246, 0.15) 2px, transparent 2px);
+  background-size: 30px 30px;
+}
+
+.light .neo-grid-bg {
+  background-image: radial-gradient(rgba(249, 115, 22, 0.15) 2px, transparent 2px);
+  background-size: 30px 30px;
+}
+
+/* Loading Spinner */
+.neo-spinner {
+  border: 3px solid rgba(139, 92, 246, 0.2);
+  border-radius: 50%;
+  border-top: 3px solid rgba(139, 92, 246, 0.8);
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+.light .neo-spinner {
+  border: 3px solid rgba(249, 115, 22, 0.2);
+  border-radius: 50%;
+  border-top: 3px solid rgba(249, 115, 22, 0.8);
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Smooth Transitions */
+.page-transition {
+  animation: fadeIn 0.7s ease-out;
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.7s ease-out;
+  }
+  
+  .animate-slide-in {
+    animation: slideIn 0.7s ease-out;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  .animate-transmission {
+    animation: transmission 3s ease-in-out infinite;
+  }
+
+  .bg-shimmer {
+    background: linear-gradient(90deg, 
+      rgba(255, 255, 255, 0) 0%, 
+      rgba(255, 255, 255, 0.08) 50%, 
+      rgba(255, 255, 255, 0) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  .text-shimmer {
+    background: linear-gradient(90deg, 
+      currentColor 0%, 
+      rgba(255, 255, 255, 0.8) 50%, 
+      currentColor 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-neo-violet to-neo-indigo;
+  }
+
+  .text-gradient-saffron {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-saffron-500 to-orange-500;
+  }
+}
+
+/* Body default styles */
+body {
+  @apply bg-light-bg dark:bg-neo-black text-light-text dark:text-white font-sans overflow-x-hidden;
+}
+
+/* 3D Card Effect */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out;
+}
+
+.card-3d-content {
+  transform: translateZ(20px);
+}
+
+/* Region Badges */
+.region-badge {
+  @apply inline-flex items-center gap-1 py-1 px-3 rounded-full text-sm font-medium;
+}
+
+.dark .region-badge {
+  @apply bg-violet-600/80 text-white;
+}
+
+.light .region-badge {
+  @apply bg-saffron-500/80 text-white;
+}
