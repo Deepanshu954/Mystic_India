@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
@@ -39,9 +38,9 @@ const Navbar: React.FC = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+    className={`fixed top-5 left-[2.5%] transform -translate-x-1/2 w-[90%] md:w-[95%] z-40 transition-all duration-300 rounded-full shadow-lg backdrop-blur-md border border-white/20 dark:border-white/20 ${
         isScrolled || !isHome
-          ? 'py-3 bg-background/90 backdrop-blur-md shadow-sm'
+          ? 'py-3 bg-white/60 dark:bg-black/50'
           : 'py-5 bg-transparent'
       }`}
     >
@@ -67,8 +66,8 @@ const Navbar: React.FC = () => {
               >
                 <Link
                   to={item.path}
-                  className={`nav-item ${
-                    location.pathname === item.path ? 'text-spice-500' : ''
+                  className={`nav-item px-5 py-2 rounded-full transition-colors ${
+                    location.pathname === item.path ? 'bg-spice-500 text-white' : 'text-foreground hover:bg-white/30 dark:hover:bg-white/10'
                   }`}
                 >
                   {item.name}
