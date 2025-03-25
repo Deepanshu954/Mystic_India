@@ -152,12 +152,13 @@ const Gallery: React.FC = () => {
         {/* Lightbox */}
         <AnimatePresence>
           {selectedImage && (
-            <motion.div 
-              className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
+    <motion.div 
+      className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={closeLightbox}
+    >
               <button 
                 className="absolute top-5 right-5 text-white hover:text-pink-500 transition-colors"
                 onClick={closeLightbox}
@@ -177,6 +178,7 @@ const Gallery: React.FC = () => {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: "spring", damping: 25 }}
+                onClick={(e) => e.stopPropagation()}
               >
                 <img 
                   src={selectedImage.url} 

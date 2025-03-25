@@ -43,7 +43,8 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-24 px-6 relative overflow-hidden">
+    <section id="contact" className="relative py-24 px-6 overflow-hidden">
+  <div className="absolute inset-12 rounded-3xl bg-white/40 dark:bg-white/5 backdrop-blur-sm border border-white/50 dark:border-white/20 z-0"></div>
       {/* Background Elements */}
       <div className="absolute top-20 right-0 w-64 h-64 bg-spice-100 rounded-full blur-3xl opacity-30"></div>
       <div className="absolute bottom-10 left-10 w-72 h-72 bg-indigo-100 rounded-full blur-3xl opacity-30"></div>

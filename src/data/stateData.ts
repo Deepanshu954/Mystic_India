@@ -237,6 +237,12 @@ export const stateData = [
           location: 'Kochi',
           description: 'The oldest European church in India, initially built in 1503',
           image: 'https://www.shutterstock.com/image-photo/santa-cruz-basilica-cochin-kerala-600nw-146780609.jpg'
+        },
+        {
+          name: "Cabo de Rama Fort",
+          location: "Canacona",
+          description: "An ancient fort offering stunning sea views and a rich history of battles and conquests.",
+          image: "https://storage.googleapis.com/goa-app-12a91.appspot.com/2025-02-18T15%3A40%3A09.812ZThings-%288%29.webp?GoogleAccessId=firebase-adminsdk-zeqcj%40goa-app-12a91.iam.gserviceaccount.com&Expires=16447017600&Signature=WFLifduQMa1%2FqPwXSs0mDe30Sxx2tlPTZNNNnyftuCW4VmghYp4bcSsk5UyaxTT9LviLDtPf1FfqzyTy%2BSDThux%2FUTkn%2Fbw7kMQL%2FDUBT%2BRUim5Mohxr1Ri7vMT6Qo2Q7XW9IsFvctrACAy%2BuQOYzq3f6xz0hk%2BvxaAYoIIinnSrtD%2FY6YGV02dM6I61q%2BFEAOOh%2FnWVOZ7YOheu3Lzmwd%2F5q%2BOBrN66pZ4q0WQ1e3nc0GYO5AXf9N2c6kmVYOFbLrhvh1hD6kiV6WGDIV6MEa4Ey0EgpbcYQ%2FmYOBwai3DG100msXGeL%2BbahMSrxiCTHpTTYKozyiPXfTLopJADww%3D%3D"
         }
       ]
     }
@@ -252,7 +258,7 @@ export const stateData = [
     artForms: 'Bharatanatyam, Carnatic Music, Tanjore Paintings',
     cuisineType: 'Rice-based, vegetarian',
     description: 'Tamil Nadu, with its ancient Dravidian culture, is home to magnificent temples, classical music, and traditional dance forms. The state\'s rich history dates back thousands of years, reflected in its UNESCO World Heritage temples and vibrant cultural practices. From coastal towns to hills, Tamil Nadu offers diverse experiences.',
-    bannerImage: 'https://travelfromindia.com/assets/uploads/news-118.jpg',
+    bannerImage: 'https://plus.unsplash.com/premium_photo-1697729536647-4e23a32dd324?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     famousFor: ['Meenakshi Temple', 'Ooty Hill Station', 'Marina Beach', 'Bharatanatyam Dance', 'Chettinad Cuisine'],
     culture: {
       description: 'Tamil Nadu has a cultural heritage dating back over 2,000 years, with Tamil being one of the world\'s oldest living languages. The state\'s culture centers around classical arts, music, dance, and literature, all deeply connected to Dravidian and Tamil traditions.',
@@ -361,6 +367,7 @@ export const stateData = [
           description: 'The largest wooden palace in Asia, built in the 16th century',
           image: 'https://www.tamilnadutourism.tn.gov.in/img/pages/large-desktop/padmanabhapuram-palace-1656252547_31ed9b142ded0a8b22b1.webp'
         }
+        
       ]
     }
   },
@@ -511,7 +518,7 @@ export const stateData = [
         'Portuguese architecture - Churches and houses with colonial charm'
       ],
       images: [
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpjaqm999fjSypjXG0AOa4GJSqnMAMVZ85cg&s',
+        'https://miro.medium.com/v2/resize:fit:1400/0*UHpD3e_JcjpDKLWy',
         'https://i2.wp.com/www.zingbus.com/blog/wp-content/uploads/2023/03/shigmo-festival-dance.jpg?ssl=1'
       ]
     },
@@ -580,19 +587,19 @@ export const stateData = [
           name: "Feast of St. Francis Xavier",
           timing: "December",
           description: "A grand feast celebrating the patron saint of Goa, attracting thousands of devotees.",
-          image: "https://upload.wikimedia.org/wikipedia/commons/4/41/Feast_of_St_Francis_Xavier.jpg"
+          image: "https://assets.serenity.co.uk/46000-46999/46810/1296x864.jpg"
         },
         {
           name: "Sunburn Festival",
           timing: "December",
           description: "Asia's biggest electronic dance music festival held on the beaches of Goa.",
-          image: "https://imgstaticcontent.lbb.in/lbbnew/wp-content/uploads/sites/1/2018/12/06124956/Sunburn2018_1.jpg"
+          image: "https://cdn.siasat.com/wp-content/uploads/2023/08/sunburn-1.jpg"
         },
         {
           name: "Christmas Celebrations",
           timing: "December",
           description: "Vibrant celebrations across Goa with midnight masses, decorations, and music.",
-          image: "https://www.goa-tourism.com/sites/default/files/2020-12/Christmas-1_0.jpg"
+          image: "https://media.licdn.com/dms/image/v2/D5612AQHWcpS8dN3Jsw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1704876397697?e=2147483647&v=beta&t=of4E3hU9lO_TdcKnF_KNPUM-OOslZvE_VugtMZ427Oc"
         }
       ]
     },
