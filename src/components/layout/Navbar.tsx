@@ -5,6 +5,7 @@ import { Logo } from '../ui/Logo';
 import { ThemeToggle } from '../theme/ThemeToggle';
 import useMobile from '@/hooks/use-mobile';
 import { useAuth } from '@/context/AuthContext';
+import { useScrollToTop } from '@/hooks/useScrollToTop';
 
 type BaseNavItem = {
   name: string;
@@ -28,6 +29,7 @@ const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isHome = location.pathname === '/';
   const { isAuthenticated } = useAuth();
+  const scrollToTop = useScrollToTop();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,6 +64,11 @@ const Navbar: React.FC = () => {
 
   const navItems = getNavItems();
 
+  const handleNavigation = () => {
+    setMobileMenuOpen(false);
+    scrollToTop();
+  };
+
   return (
     <header
       className={`fixed top-4 left-0 right-0 flex justify-center items-center z-40 transition-all duration-700 ease-out rounded-full shadow-lg backdrop-blur-md border border-white/30 dark:border-white/30 ${
@@ -71,7 +78,7 @@ const Navbar: React.FC = () => {
       }`}
     >
       <nav className="container mx-auto px-6 flex justify-between items-center">
-        <Link to="/" className="z-10">
+        <Link to="/" className="z-10" onClick={handleNavigation}>
           <Logo className="h-10 w-auto" />
         </Link>
 
@@ -81,6 +88,7 @@ const Navbar: React.FC = () => {
               <div key={item.name}>
                 <Link
                   to={item.path}
+                  onClick={handleNavigation}
                   className={`nav-item transition-colors duration-500 ease-in-out ${
                     location.pathname === item.path ? 'text-spice-500 font-semibold' : 'hover:text-spice-400'
                   } ${hasIcon(item) ? 'flex items-center' : ''}`}
@@ -118,10 +126,10 @@ const Navbar: React.FC = () => {
               <div key={item.name}>
                 <Link
                   to={item.path}
+                  onClick={handleNavigation}
                   className={`py-3 text-lg font-medium hover:text-spice-500 transition-colors flex items-center ${
                     location.pathname === item.path ? 'text-spice-500' : 'text-foreground'
                   }`}
-                  onClick={toggleMobileMenu}
                 >
                   {hasIcon(item) && <item.icon className="mr-2 h-5 w-5" />}
                   {item.name}
