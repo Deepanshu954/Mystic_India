@@ -271,9 +271,9 @@ export const defaultArtFormDetails: ArtFormDetails = {
   },
   image: "https://www.aardvarkartservices.com/wp-content/uploads/2023/04/7-major-forms-of-art-Aardvark-Art-Service-blog-graphic-scaled.jpg",
   additionalImages: [
-    "https://images.unsplash.com/photo-1594026112334-d8040bd05749?q=80&w=1170",
-    "https://images.unsplash.com/photo-1540122995631-7c74c46c0b8f?q=80&w=1170",
-    "https://images.unsplash.com/photo-1584806749948-697891c67821?q=80&w=1170"
+    "https://blogs.penkraft.in/wp-content/uploads/2021/06/Add-a-subheading-735x400.png",
+    "https://blogs.penkraft.in/wp-content/uploads/2021/06/Add-a-subheading-735x400.png",
+    "https://blogs.penkraft.in/wp-content/uploads/2021/06/Add-a-subheading-735x400.png"
   ]
 };
 
