@@ -43,6 +43,7 @@ const App = () => {
                 <Route path="/culture" element={<Culture />} />
                 <Route path="/journey/:journeyId" element={<JourneyDetail />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/account-settings" element={<AccountSettings />} />
                 <Route path="/admin" element={<Admin />} />
