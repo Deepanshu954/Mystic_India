@@ -13,6 +13,7 @@ import AllStates from "./pages/AllStates";
 import Cuisine from "./pages/Cuisine";
 import Culture from "./pages/Culture";
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import AccountSettings from "./pages/AccountSettings";
 import JourneyDetail from "./pages/JourneyDetail";
