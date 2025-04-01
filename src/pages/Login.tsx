@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, ArrowRight, Github, Chrome } from 'lucide-react';
@@ -262,7 +263,10 @@ const Login = () => {
           transition={{ delay: 0.8, duration: 0.6 }}
         >
           Don't have an account?{' '}
-          <button className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-indigo-500 hover:from-violet-500 hover:to-indigo-600 font-medium transition-all duration-300 hover:scale-105 inline-block">
+          <button
+            onClick={() => navigate('/signup')}
+            className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-indigo-500 hover:from-violet-500 hover:to-indigo-600 font-medium transition-all duration-300 hover:scale-105 inline-block"
+          >
             Sign up for free
           </button>
         </motion.p>
