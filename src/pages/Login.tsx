@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, ArrowRight, Github, Chrome } from 'lucide-react';
@@ -82,6 +81,10 @@ const Login = () => {
     } finally {
       setSocialLoading(null);
     }
+  };
+
+  const handleSignUpNavigation = () => {
+    navigate('/signup');
   };
 
   return (
@@ -264,10 +267,10 @@ const Login = () => {
         >
           Don't have an account?{' '}
           <button
-            onClick={() => navigate('/signup')}
+            onClick={handleSignUpNavigation}
             className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-indigo-500 hover:from-violet-500 hover:to-indigo-600 font-medium transition-all duration-300 hover:scale-105 inline-block"
           >
-            Sign up for free
+            Sign Up
           </button>
         </motion.p>
       </motion.div>
