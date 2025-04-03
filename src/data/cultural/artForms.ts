@@ -1,6 +1,5 @@
-
 import { stateData } from '../stateData';
-import { getArtFormDetails } from './artformdata';
+import { getArtFormDetails, getArtFormStates } from './artformdata';
 
 // Create a more structured format for art forms
 export type ArtForm = {
@@ -31,31 +30,39 @@ const regionMap: Record<string, string> = {
 };
 
 // Extract all cultural data with enhanced art form information
-export const artForms: ArtForm[] = stateData.flatMap(state => 
-  state.artForms?.split(', ').map((art) => {
-    // Extract region info from state data
-    const regionText = state.region || "";
-    const regionId = regionMap[regionText] || "other";
-    
-    // Create slug for the ID
-    const artId = art.toLowerCase().replace(/\s+/g, '-');
-    
-    // Get art form details from the new detailed data source
-    const artDetails = getArtFormDetails(art);
-    
-    return {
-      id: `${state.id}-${artId}`,
-      name: art,
-      stateId: state.id,
-      stateName: state.name,
-      regionId: regionId,
-      regionName: regionText,
-      image: artDetails.image,
-      description: artDetails.description,
-      history: artDetails.history,
-      additionalImages: artDetails.additionalImages
-    };
-  }) || []
+export const artForms: ArtForm[] = Array.from(
+  stateData.flatMap(state => 
+    state.artForms?.split(', ').map((art) => {
+      // Extract region info from state data
+      const regionText = state.region || "";
+      const regionId = regionMap[regionText] || "other";
+      
+      // Create slug for the ID
+      const artId = art.toLowerCase().replace(/\s+/g, '-');
+      
+      // Get art form details and states from the new detailed data source
+      const artDetails = getArtFormDetails(art);
+      const artStates = getArtFormStates(art); // Retrieve state names directly
+      
+      return {
+        id: artId, // Use artId as the unique identifier
+        name: art,
+        stateId: '', // State IDs are no longer needed
+        stateName: artStates.join(', '), // Combine state names
+        regionId: regionId,
+        regionName: regionText,
+        image: artDetails.image,
+        description: artDetails.description,
+        history: artDetails.history,
+        additionalImages: artDetails.additionalImages
+      };
+    }) || []
+  ).reduce((map, art) => {
+    if (!map.has(art.id)) {
+      map.set(art.id, art);
+    }
+    return map;
+  }, new Map<string, ArtForm>()).values()
 );
 
 // Function to get artforms by region
