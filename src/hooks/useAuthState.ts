@@ -9,7 +9,23 @@ export function useAuthState() {
   useEffect(() => {
     // Initialize user state from localStorage
     const currentUser = authService.getCurrentUser();
-    setUser(currentUser);
+    
+    // Validate token if user exists
+    if (currentUser && !authService.validateToken()) {
+      // Token has expired, attempt to refresh
+      const refreshSuccess = authService.refreshToken();
+      if (!refreshSuccess) {
+        // If refresh fails, log out
+        authService.logout();
+        setUser(null);
+      } else {
+        // Get updated user with new token
+        setUser(authService.getCurrentUser());
+      }
+    } else {
+      setUser(currentUser);
+    }
+    
     setLoading(false);
 
     // Set up listener for storage events to sync across tabs
@@ -19,8 +35,21 @@ export function useAuthState() {
     };
 
     window.addEventListener('storage', handleStorageChange);
+    
+    // Check token validity periodically
+    const tokenValidator = setInterval(() => {
+      if (authService.getCurrentUser() && !authService.validateToken()) {
+        const refreshSuccess = authService.refreshToken();
+        if (!refreshSuccess) {
+          authService.logout();
+          setUser(null);
+        }
+      }
+    }, 10 * 60 * 1000); // Check every 10 minutes
+    
     return () => {
       window.removeEventListener('storage', handleStorageChange);
+      clearInterval(tokenValidator);
     };
   }, []);
 
@@ -28,6 +57,19 @@ export function useAuthState() {
     setLoading(true);
     try {
       const result = await authService.login(email, password);
+      if (result.success && result.user) {
+        setUser(result.user);
+      }
+      return result;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const signUp = async (name: string, email: string, password: string) => {
+    setLoading(true);
+    try {
+      const result = await authService.signUp(name, email, password);
       if (result.success && result.user) {
         setUser(result.user);
       }
@@ -204,7 +246,8 @@ export function useAuthState() {
   return { 
     user, 
     loading, 
-    login, 
+    login,
+    signUp,
     socialLogin,
     updateProfile,
     toggleFavoriteState,
