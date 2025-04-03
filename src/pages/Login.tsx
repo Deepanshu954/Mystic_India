@@ -83,7 +83,8 @@ const Login = () => {
     }
   };
 
-  const handleSignUpNavigation = () => {
+  const navigateToSignUp = (e: React.MouseEvent) => {
+    e.preventDefault();
     navigate('/signup');
   };
 
@@ -266,12 +267,14 @@ const Login = () => {
           transition={{ delay: 0.8, duration: 0.6 }}
         >
           Don't have an account?{' '}
-          <button
-            onClick={handleSignUpNavigation}
-            className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-indigo-500 hover:from-violet-500 hover:to-indigo-600 font-medium transition-all duration-300 hover:scale-105 inline-block"
+          <motion.button
+            onClick={navigateToSignUp}
+            className="relative text-violet-400 font-medium inline-block hover:text-violet-300 transition-colors duration:300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Sign Up
-          </button>
+          </motion.button>
         </motion.p>
       </motion.div>
     </div>

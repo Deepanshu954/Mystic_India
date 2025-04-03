@@ -2218,10 +2218,3 @@ export const getArtFormDetails = (artFormName: string): ArtFormDetails => {
     }
   );
 };
-
-// Function to get state names for a given art form
-export const getArtFormStates = (artFormName: string): string[] => {
-  return stateData
-    .filter(state => state.artForms?.split(', ').includes(artFormName))
-    .map(state => state.name);
-};

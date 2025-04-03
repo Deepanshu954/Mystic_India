@@ -1,12 +1,12 @@
-import { stateData } from '../stateData';
-import { getArtFormDetails, getArtFormStates } from './artformdata';
+
+import { getArtFormDetails } from './artformdata';
 
 // Create a more structured format for art forms
 export type ArtForm = {
   id: string;
   name: string;
-  stateId: string;
-  stateName: string;
+  stateIds: string[];
+  stateNames: string[];
   regionId: string;
   regionName: string;
   image: string;
@@ -19,7 +19,7 @@ export type ArtForm = {
   additionalImages?: string[];
 };
 
-// Map of region IDs to names
+// Map of region names to IDs
 const regionMap: Record<string, string> = {
   "Northern India": "north-india",
   "South India": "south-india",
@@ -29,41 +29,144 @@ const regionMap: Record<string, string> = {
   "Northeast India": "northeast-india"
 };
 
-// Extract all cultural data with enhanced art form information
-export const artForms: ArtForm[] = Array.from(
-  stateData.flatMap(state => 
-    state.artForms?.split(', ').map((art) => {
-      // Extract region info from state data
-      const regionText = state.region || "";
-      const regionId = regionMap[regionText] || "other";
-      
-      // Create slug for the ID
-      const artId = art.toLowerCase().replace(/\s+/g, '-');
-      
-      // Get art form details and states from the new detailed data source
-      const artDetails = getArtFormDetails(art);
-      const artStates = getArtFormStates(art); // Retrieve state names directly
-      
-      return {
-        id: artId, // Use artId as the unique identifier
-        name: art,
-        stateId: '', // State IDs are no longer needed
-        stateName: artStates.join(', '), // Combine state names
-        regionId: regionId,
-        regionName: regionText,
-        image: artDetails.image,
-        description: artDetails.description,
-        history: artDetails.history,
-        additionalImages: artDetails.additionalImages
-      };
-    }) || []
-  ).reduce((map, art) => {
-    if (!map.has(art.id)) {
-      map.set(art.id, art);
-    }
-    return map;
-  }, new Map<string, ArtForm>()).values()
-);
+// Create unique art forms with associated states
+export const artForms: ArtForm[] = [
+  {
+    id: "kathputli",
+    name: "Kathputli",
+    stateIds: ["rajasthan", "delhi"],
+    stateNames: ["Rajasthan", "Delhi"],
+    regionId: regionMap["Northern India"],
+    regionName: "Northern India",
+    ...getArtFormDetails("Kathputli")
+  },
+  {
+    id: "ghoomar",
+    name: "Ghoomar",
+    stateIds: ["rajasthan"],
+    stateNames: ["Rajasthan"],
+    regionId: regionMap["Northern India"],
+    regionName: "Northern India",
+    ...getArtFormDetails("Ghoomar")
+  },
+  {
+    id: "kalbeliya",
+    name: "Kalbeliya",
+    stateIds: ["rajasthan"],
+    stateNames: ["Rajasthan"],
+    regionId: regionMap["Northern India"],
+    regionName: "Northern India",
+    ...getArtFormDetails("Kalbeliya")
+  },
+  {
+    id: "kathakali",
+    name: "Kathakali",
+    stateIds: ["kerala"],
+    stateNames: ["Kerala"],
+    regionId: regionMap["South India"],
+    regionName: "South India",
+    ...getArtFormDetails("Kathakali")
+  },
+  {
+    id: "mohiniyattam",
+    name: "Mohiniyattam",
+    stateIds: ["kerala"],
+    stateNames: ["Kerala"],
+    regionId: regionMap["South India"],
+    regionName: "South India",
+    ...getArtFormDetails("Mohiniyattam")
+  },
+  {
+    id: "kalaripayattu",
+    name: "Kalaripayattu",
+    stateIds: ["kerala"],
+    stateNames: ["Kerala"],
+    regionId: regionMap["South India"],
+    regionName: "South India",
+    ...getArtFormDetails("Kalaripayattu")
+  },
+  {
+    id: "bharatanatyam",
+    name: "Bharatanatyam",
+    stateIds: ["tamil-nadu", "karnataka"],
+    stateNames: ["Tamil Nadu", "Karnataka"],
+    regionId: regionMap["South India"],
+    regionName: "South India",
+    ...getArtFormDetails("Bharatanatyam")
+  },
+  {
+    id: "carnatic-music",
+    name: "Carnatic Music",
+    stateIds: ["tamil-nadu", "karnataka", "kerala", "andhra-pradesh"],
+    stateNames: ["Tamil Nadu", "Karnataka", "Kerala", "Andhra Pradesh"],
+    regionId: regionMap["South India"],
+    regionName: "South India",
+    ...getArtFormDetails("Carnatic Music")
+  },
+  {
+    id: "tanjore-paintings",
+    name: "Tanjore Paintings",
+    stateIds: ["tamil-nadu"],
+    stateNames: ["Tamil Nadu"],
+    regionId: regionMap["South India"],
+    regionName: "South India",
+    ...getArtFormDetails("Tanjore Paintings")
+  },
+  {
+    id: "nati-dance",
+    name: "Nati Dance",
+    stateIds: ["himachal-pradesh"],
+    stateNames: ["Himachal Pradesh"],
+    regionId: regionMap["Northern India"],
+    regionName: "Northern India",
+    ...getArtFormDetails("Nati Dance")
+  },
+  {
+    id: "thangka-paintings",
+    name: "Thangka Paintings",
+    stateIds: ["himachal-pradesh", "ladakh", "sikkim"],
+    stateNames: ["Himachal Pradesh", "Ladakh", "Sikkim"],
+    regionId: regionMap["Northern India"],
+    regionName: "Northern India",
+    ...getArtFormDetails("Thangka Paintings")
+  },
+  {
+    id: "chamba-rumal",
+    name: "Chamba Rumal",
+    stateIds: ["himachal-pradesh"],
+    stateNames: ["Himachal Pradesh"],
+    regionId: regionMap["Northern India"],
+    regionName: "Northern India",
+    ...getArtFormDetails("Chamba Rumal")
+  },
+  {
+    id: "fado-music",
+    name: "Fado Music",
+    stateIds: ["goa"],
+    stateNames: ["Goa"],
+    regionId: regionMap["West India"],
+    regionName: "West India",
+    ...getArtFormDetails("Fado Music")
+  },
+  {
+    id: "goan-carnival",
+    name: "Goan Carnival",
+    stateIds: ["goa"],
+    stateNames: ["Goa"],
+    regionId: regionMap["West India"],
+    regionName: "West India",
+    ...getArtFormDetails("Goan Carnival")
+  },
+  {
+    id: "traditional-pottery",
+    name: "Traditional Pottery",
+    stateIds: ["gujarat", "rajasthan", "uttar-pradesh", "west-bengal", "tamil-nadu"],
+    stateNames: ["Gujarat", "Rajasthan", "Uttar Pradesh", "West Bengal", "Tamil Nadu"],
+    regionId: "all-india",
+    regionName: "All India",
+    ...getArtFormDetails("Traditional Pottery")
+  }
+];
 
 // Function to get artforms by region
 export const getArtFormsByRegion = (regionId: string): ArtForm[] => {
@@ -73,7 +176,7 @@ export const getArtFormsByRegion = (regionId: string): ArtForm[] => {
 
 // Function to get artforms by state
 export const getArtFormsByState = (stateId: string): ArtForm[] => {
-  return artForms.filter(art => art.stateId === stateId);
+  return artForms.filter(art => art.stateIds.includes(stateId));
 };
 
 // Function to get a specific artform by ID
