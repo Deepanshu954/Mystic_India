@@ -46,7 +46,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         
         // Initialize all videos with proper settings for dark mode
         initializeVideos();
-      } else {
+      }
+      else {
         // Reset to light theme styles
         document.body.style.background = '';
         document.body.style.backgroundImage = "url('https://images.unsplash.com/photo-1740137660661-96c8ec7bc92e?q=80&w=2268&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')";
