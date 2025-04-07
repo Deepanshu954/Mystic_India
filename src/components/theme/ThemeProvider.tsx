@@ -49,11 +49,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       } else {
         // Reset to light theme styles
         document.body.style.background = '';
-        document.body.style.backgroundImage = "url('https://plus.unsplash.com/premium_photo-1675798510636-a5e567897254?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8ODl8fGFic3RyYWN0JTIwd2hpdGV8ZW58MHx8MHx8fDA%3D')";
-        document.body.style.backgroundSize = '';
-        document.body.style.backgroundAttachment = '';
-        document.body.style.backgroundPosition = '';
-        document.body.style.backgroundRepeat = '';
+        document.body.style.backgroundImage = "url('https://r4.wallpaperflare.com/wallpaper/952/786/491/nature-landscape-forest-river-wallpaper-36399499392b36fdd6e46796616d6c0d.jpg')";
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundAttachment = 'fixed';
+        document.body.style.backgroundPosition = 'center';
+        document.body.style.backgroundRepeat = 'no-repeat';
         document.body.style.backgroundBlendMode = '';
         
         // Still initialize videos for light mode
