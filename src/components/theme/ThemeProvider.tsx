@@ -36,6 +36,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       // Apply theme-specific styles
       if (theme === 'dark') {
         // Apply dark theme styles
+        document.body.style.background = '#0a0920';
         document.body.style.backgroundImage = "url('https://r4.wallpaperflare.com/wallpaper/684/422/438/abstract-3d-digital-art-stu-ballinger-wallpaper-2b965cfd43817fe9f584cbf97d1cfc40.jpg')";
         document.body.style.backgroundSize = 'cover';
         document.body.style.backgroundAttachment = 'fixed';
@@ -47,7 +48,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         initializeVideos();
       } else {
         // Reset to light theme styles
-        document.body.style.background = '';
+        document.body.style.background = '#0a0920';
         document.body.style.backgroundImage = "url('https://r4.wallpaperflare.com/wallpaper/952/786/491/nature-landscape-forest-river-wallpaper-36399499392b36fdd6e46796616d6c0d.jpg')";
         document.body.style.backgroundSize = 'cover';
         document.body.style.backgroundAttachment = 'fixed';
