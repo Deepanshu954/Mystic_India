@@ -11,15 +11,18 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light');
-  
-  useEffect(() => {
+  const [theme, setTheme] = useState<Theme>(() => {
+    // Check for saved theme preference or system preference
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme') as Theme;
-      const preferredTheme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      setTheme(preferredTheme);
+      if (savedTheme) return savedTheme;
+      
+      // Check system preference
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
-  }, []);
+    
+    return 'light'; // Default theme
+  });
 
   useEffect(() => {
     // Update localStorage and document class when theme changes
@@ -43,15 +46,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         
         // Initialize all videos with proper settings for dark mode
         initializeVideos();
-      }
-      else {
+      } else {
         // Reset to light theme styles
         document.body.style.background = '';
         document.body.style.backgroundImage = "url('https://images.unsplash.com/photo-1740137660661-96c8ec7bc92e?q=80&w=2268&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')";
         document.body.style.backgroundSize = 'cover';
         document.body.style.backgroundAttachment = 'fixed';
         document.body.style.backgroundPosition = 'center';
-        document.body.style.backgroundRepeat = '';
+        document.body.style.backgroundRepeat = 'no-repeat';
         document.body.style.backgroundBlendMode = '';
         
         // Still initialize videos for light mode
