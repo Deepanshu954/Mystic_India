@@ -129,7 +129,8 @@ const Experience: React.FC = () => {
         <ScrollReveal className="mt-16">
           <div className="text-center">
             <motion.a 
-              href="#contact" 
+              href="https://www.makemytrip.com/" 
+              target ="_blank"
               className="btn-primary inline-flex items-center px-6 py-3 rounded-md font-medium"
               whileHover={{ y: -5, transition: { duration: 0.2 } }}
               whileTap={{ y: 0 }}
