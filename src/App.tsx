@@ -17,6 +17,7 @@ import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import AccountSettings from "./pages/AccountSettings";
 import JourneyDetail from "./pages/JourneyDetail";
+import JourneyPlanner from "./pages/JourneyPlanner";
 import { useEffect } from "react";
 import { ThemeProvider } from "./components/theme/ThemeProvider";
 
@@ -43,6 +44,7 @@ const App = () => {
                 <Route path="/cuisine" element={<Cuisine />} />
                 <Route path="/culture" element={<Culture />} />
                 <Route path="/journey/:journeyId" element={<JourneyDetail />} />
+                <Route path="/journey-planner" element={<JourneyPlanner />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<Profile />} />
