@@ -1,6 +1,6 @@
 
 import React, { useRef, useEffect } from 'react';
-import { Message } from './types';
+import { Message, CHATBOT_BACKGROUNDS } from './types';
 import ChatbotMessage from './ChatbotMessage';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -23,10 +23,18 @@ const ChatbotMessagesContainer: React.FC<ChatbotMessagesContainerProps> = ({
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, isLoading]);
 
   return (
-    <div className="h-[350px] overflow-y-auto p-3 scrollbar-hide">
+    <div 
+      className="h-[350px] overflow-y-auto py-3 px-4 scrollbar-hide"
+      style={{ 
+        backgroundImage: `url(${theme === 'dark' ? CHATBOT_BACKGROUNDS.dark : CHATBOT_BACKGROUNDS.light})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
+    >
       <AnimatePresence initial={false}>
         {messages.map((message, index) => (
           <motion.div
@@ -44,18 +52,56 @@ const ChatbotMessagesContainer: React.FC<ChatbotMessagesContainerProps> = ({
         
         {isLoading && (
           <motion.div 
-            className="text-center text-gray-500 dark:text-gray-400 my-4"
+            className="text-left mb-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className="flex items-center justify-center gap-2">
-              <motion.div 
-                className="rounded-full h-5 w-5 border-b-2 border-indigo-600"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              />
-              <span>Planning your magical journey...</span>
+            <div className="inline-block p-3 rounded-lg backdrop-blur-sm bg-white/80 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 max-w-[90%] shadow-sm">
+              <div className="flex items-center space-x-1">
+                <motion.div 
+                  className="w-2 h-2 rounded-full bg-indigo-600 dark:bg-indigo-400"
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [1, 0.5, 1]
+                  }}
+                  transition={{
+                    duration: 1,
+                    repeat: Infinity,
+                    repeatType: 'loop',
+                    ease: "easeInOut",
+                    delay: 0
+                  }}
+                />
+                <motion.div 
+                  className="w-2 h-2 rounded-full bg-indigo-500 dark:bg-indigo-500"
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [1, 0.5, 1]
+                  }}
+                  transition={{
+                    duration: 1,
+                    repeat: Infinity,
+                    repeatType: 'loop',
+                    ease: "easeInOut",
+                    delay: 0.3
+                  }}
+                />
+                <motion.div 
+                  className="w-2 h-2 rounded-full bg-indigo-400 dark:bg-indigo-600"
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [1, 0.5, 1]
+                  }}
+                  transition={{
+                    duration: 1,
+                    repeat: Infinity,
+                    repeatType: 'loop',
+                    ease: "easeInOut",
+                    delay: 0.6
+                  }}
+                />
+              </div>
             </div>
           </motion.div>
         )}

@@ -20,6 +20,7 @@ import JourneyDetail from "./pages/JourneyDetail";
 import JourneyPlanner from "./pages/JourneyPlanner";
 import { useEffect } from "react";
 import { ThemeProvider } from "./components/theme/ThemeProvider";
+import { ChatbotProvider } from "./components/chatbot/ChatbotProvider";
 
 const queryClient = new QueryClient();
 
@@ -34,26 +35,28 @@ const App = () => {
       <ThemeProvider>
         <AuthProvider>
           <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/states" element={<AllStates />} />
-                <Route path="/state/:stateId" element={<StateDetail />} />
-                <Route path="/cuisine" element={<Cuisine />} />
-                <Route path="/culture" element={<Culture />} />
-                <Route path="/journey/:journeyId" element={<JourneyDetail />} />
-                <Route path="/journey-planner" element={<JourneyPlanner />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/account-settings" element={<AccountSettings />} />
-                <Route path="/admin" element={<Admin />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
+            <ChatbotProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/states" element={<AllStates />} />
+                  <Route path="/state/:stateId" element={<StateDetail />} />
+                  <Route path="/cuisine" element={<Cuisine />} />
+                  <Route path="/culture" element={<Culture />} />
+                  <Route path="/journey/:journeyId" element={<JourneyDetail />} />
+                  <Route path="/journey-planner" element={<JourneyPlanner />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/account-settings" element={<AccountSettings />} />
+                  <Route path="/admin" element={<Admin />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </ChatbotProvider>
           </TooltipProvider>
         </AuthProvider>
       </ThemeProvider>

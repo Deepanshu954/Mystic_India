@@ -1,6 +1,5 @@
-
 import React, { memo, useEffect, useState } from 'react';
-import { Calendar, Map, Star, ArrowRight } from 'lucide-react';
+import { Calendar, Map, Star, ArrowRight, MessageSquareText } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import ScrollReveal from '../ui/ScrollReveal';
 import { motion } from 'framer-motion';
@@ -10,8 +9,8 @@ import { journeys } from '@/data/journeys';
 import HorizontalScroll from '../ui/horizontal-scroll';
 import useMobile from '@/hooks/use-mobile';
 import { useAuth } from '@/context/AuthContext';
+import { useChatbot } from '@/components/chatbot/ChatbotProvider';
 
-// Extract card component and memoize it for better performance
 const JourneyCard = memo(({ journey, theme, starColor, textAccentColor }: { 
   journey: any; 
   theme: string;
@@ -85,16 +84,15 @@ const Experience: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [allJourneys, setAllJourneys] = useState<any[]>([]);
+  const { openChatbot } = useChatbot();
   
   const starColor = theme === 'dark' ? "#e94cff" : "#ff7e11";
   const textAccentColor = theme === 'dark' ? "#53a6ff" : "#ff7e11";
 
   useEffect(() => {
-    // Combine predefined journeys with user journeys if available
     const combinedJourneys = [...journeys];
     
     if (user && user.trips && user.trips.length > 0) {
-      // Format user trips to match the journey format
       const userJourneys = user.trips.map((trip: any) => ({
         ...trip,
         title: trip.destination,
@@ -103,30 +101,30 @@ const Experience: React.FC = () => {
         rating: "5.0"
       }));
       
-      // Add user journeys to the beginning of the list
       combinedJourneys.unshift(...userJourneys);
     }
     
-    // Use only first 6 journeys to avoid overcrowding
     setAllJourneys(combinedJourneys.slice(0, 6));
   }, [user]);
 
   const handlePlanJourney = () => {
     navigate('/journey-planner');
   };
+  
+  const handleAskAI = () => {
+    openChatbot();
+  };
 
   return (
     <section id="experience" className={`relative py-24 px-6 section-experience`}>
       <div className="absolute inset-12 rounded-3xl bg-white/40 dark:bg-white/10 backdrop-blur-sm border border-white/50 dark:border-white/30 z-0"></div>
       <div className="container mx-auto">
-        {/* Section Header */}
         <SectionHeader
           subtitle="Curated Experiences"
           title="Our Signature Journeys"
           description="Immerse yourself in handcrafted experiences that blend cultural immersion, natural wonders, and authentic encounters with local communities."
         />
 
-        {/* Experiences Cards */}
         {isMobile ? (
           <div className="mt-12">
             <HorizontalScroll>
@@ -157,7 +155,6 @@ const Experience: React.FC = () => {
           </div>
         )}
 
-        {/* CTA */}
         <ScrollReveal className="mt-16">
           <div className="text-center flex flex-col sm:flex-row items-center justify-center gap-4">
             <motion.div>
@@ -193,6 +190,22 @@ const Experience: React.FC = () => {
                 >
                   Plan Your Journey
                   <ArrowRight size={16} className="ml-2" />
+                </motion.span>
+              </button>
+            </motion.div>
+            
+            <motion.div>
+              <button 
+                onClick={handleAskAI}
+                className="inline-flex items-center px-6 py-3 rounded-md font-medium border-2 border-purple-500 text-purple-600 dark:text-purple-400 dark:border-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
+              >
+                <motion.span
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                  whileTap={{ y: 0 }}
+                  className="inline-flex items-center"
+                >
+                  Ask Our AI Guide
+                  <MessageSquareText size={16} className="ml-2" />
                 </motion.span>
               </button>
             </motion.div>

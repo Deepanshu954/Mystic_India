@@ -38,7 +38,7 @@ const LazyImage = memo(({
     placeholderSrc,
     { 
       rootMargin, 
-      immediate: skipLazyEffects,
+      immediate: skipLazyEffects || location.pathname.includes('/state/') || location.pathname === '/cuisine',
       priority 
     }
   );
@@ -50,9 +50,17 @@ const LazyImage = memo(({
   };
 
   const handleError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    console.error("Image failed to load:", src);
     onError(e);
     if (props.onError) props.onError(e);
   };
+
+  // When src changes, reset isLoaded state
+  useEffect(() => {
+    if (!skipLazyEffects) {
+      setIsLoaded(false);
+    }
+  }, [src, skipLazyEffects]);
 
   useEffect(() => {
     // If we're on home page or priority image, set as loaded immediately

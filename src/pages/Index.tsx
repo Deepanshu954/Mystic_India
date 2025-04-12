@@ -13,10 +13,13 @@ import Reviews from '@/components/sections/Reviews';
 import { useTheme } from '@/components/theme/ThemeProvider';
 import useMobile from '@/hooks/use-mobile';
 import { HomeStarsCanvas } from '@/components/ui/StarBackground';
+import { useChatbot } from '@/components/chatbot/ChatbotProvider';
+import { motion } from 'framer-motion';
 
-const Index = () => {
+const Index: React.FC = () => {
   const { theme } = useTheme();
   const isMobile = useMobile();
+  const { openChatbot } = useChatbot();
   
   useEffect(() => {
     // Priority loading for homepage - set highest priority for FCP
@@ -46,6 +49,10 @@ const Index = () => {
     };
   }, [isMobile]);
 
+  const handleChatWithAI = () => {
+    openChatbot();
+  };
+
   return (
     <div className={`min-h-screen relative ${isMobile ? 'mobile-view' : ''}`}>
       {/* Star Background */}
@@ -54,8 +61,8 @@ const Index = () => {
       {/* Abstract backgrounds for light mode only */}
       {theme === 'light' && (
         <>
-          <div className="fixed top-0 right-0 w-96 h-96 bg-spice-100 rounded-full filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2 z-[-1]"></div>
-          <div className="fixed bottom-0 left-0 w-96 h-96 bg-indigo-200 rounded-full filter blur-3xl opacity-20 translate-y-1/2 -translate-x-1/2 z-[-1]"></div>
+          <div className="fixed top-0 right-0 w-96 h-96 bg-indigo-100 rounded-full filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2 z-[-1]"></div>
+          <div className="fixed bottom-0 left-0 w-96 h-96 bg-purple-200 rounded-full filter blur-3xl opacity-20 translate-y-1/2 -translate-x-1/2 z-[-1]"></div>
           <div className="fixed inset-0 z-[-1] opacity-10 pointer-events-none" style={{backgroundImage: 'url("https://images.unsplash.com/photo-1552083974-186346191183?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGFic3RyYWN0fGVufDB8fDB8fHww")'}}></div>
         </>
       )}
@@ -64,7 +71,7 @@ const Index = () => {
       {theme === 'dark' && (
         <>
           <div className="fixed top-1/4 right-1/4 w-96 h-96 bg-purple-900 rounded-full filter blur-3xl opacity-10 z-[-1]"></div>
-          <div className="fixed bottom-1/4 left-1/4 w-96 h-96 bg-blue-900 rounded-full filter blur-3xl opacity-10 z-[-1]"></div>
+          <div className="fixed bottom-1/4 left-1/4 w-96 h-96 bg-indigo-900 rounded-full filter blur-3xl opacity-10 z-[-1]"></div>
         </>
       )}
       
@@ -72,6 +79,25 @@ const Index = () => {
       <main className={isMobile ? "mobile-snap-container hardware-accelerated" : ""}>
         <div className={isMobile ? "mobile-snap-item" : ""}>
           <Hero />
+          {/* AI Chat Assistant Prompt */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2, duration: 0.5 }}
+            className="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-10"
+          >
+            <motion.button
+              onClick={handleChatWithAI}
+              className="bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2 border border-indigo-100 dark:border-indigo-900"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="w-5 h-5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center">
+                <span className="text-white text-xs font-bold">AI</span>
+              </span>
+              <span className="text-sm font-medium">Ask Mystic India Guide</span>
+            </motion.button>
+          </motion.div>
         </div>
         
         {/* Add translucent background layer to content sections */}

@@ -14,7 +14,7 @@ const useImageLazyLoad = (
   placeholderSrc: string = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E",
   options: UseImageLazyLoadOptions = {}
 ) => {
-  const [imageSrc, setImageSrc] = useState(options.priority ? src : placeholderSrc);
+  const [imageSrc, setImageSrc] = useState(options.priority || options.immediate ? src : placeholderSrc);
   const [imageRef, setImageRef] = useState<HTMLImageElement | null>(null);
   const [isLoaded, setIsLoaded] = useState(options.priority || false);
   const [hasError, setHasError] = useState(false);
@@ -64,24 +64,34 @@ const useImageLazyLoad = (
     }
   }, [skipLazyLoad, src, isLoaded, hasError, onError]);
 
-  // Handle fallback strategy for failed images
+  // Handle fallback for failed images
   useEffect(() => {
-    if (hasError && src.includes('unsplash')) {
-      // If an Unsplash image fails, try a different source
-      const fallbackSrc = src.replace(
-        /unsplash\.com\/.*/, 
-        `picsum.photos/${Math.floor(800 + Math.random() * 400)}/${Math.floor(600 + Math.random() * 200)}`
-      );
+    if (hasError) {
+      // Try with a different strategy if the image fails to load
+      let fallbackSrc = src;
       
-      // Create an image element to preload the fallback
-      const img = new Image();
-      img.src = fallbackSrc;
-      img.onload = () => {
-        if (isMounted.current) {
-          setImageSrc(fallbackSrc);
-          setHasError(false);
-        }
-      };
+      if (src.includes('unsplash')) {
+        // If an Unsplash image fails, try a different source
+        fallbackSrc = src.replace(
+          /unsplash\.com\/.*/, 
+          `picsum.photos/${Math.floor(800 + Math.random() * 400)}/${Math.floor(600 + Math.random() * 200)}`
+        );
+      } else if (src.includes('images.')) {
+        // General fallback for any image URL
+        fallbackSrc = `https://picsum.photos/800/600?random=${Math.floor(Math.random() * 1000)}`;
+      }
+      
+      if (fallbackSrc !== src) {
+        // Create an image element to preload the fallback
+        const img = new Image();
+        img.src = fallbackSrc;
+        img.onload = () => {
+          if (isMounted.current) {
+            setImageSrc(fallbackSrc);
+            setHasError(false);
+          }
+        };
+      }
     }
   }, [hasError, src]);
 
@@ -90,6 +100,7 @@ const useImageLazyLoad = (
 
     // Skip intersection observer for home page content and priority images
     if (skipLazyLoad) {
+      setImageSrc(src);
       return;
     }
 
