@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
@@ -43,6 +42,10 @@ const JourneyPlanner = () => {
       nightActivities: ['']
     }))
   });
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page on component mount
+  }, []);
 
   useEffect(() => {
     if (!user) {
