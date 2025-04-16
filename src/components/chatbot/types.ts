@@ -1,65 +1,97 @@
 
+export interface Message {
+  text: string;
+  sender: 'user' | 'bot';
+  type?: 'regular' | 'info';
+}
+
+export interface ChatbotTrainingItem {
+  patterns: string[];
+  responses: string[];
+  category?: string;
+}
+
+// Adding missing types that caused the errors
 export interface JourneyItineraryDay {
   day: number;
   title: string;
   activities: string[];
-  image?: string;
   timeOfDay?: 'morning' | 'afternoon' | 'evening' | 'night';
   places?: string[];
   cuisine?: string[];
   artForms?: string[];
+  image?: string;
   morningActivities?: string[];
   afternoonActivities?: string[];
   eveningActivities?: string[];
   nightActivities?: string[];
 }
 
+export interface StateInfo {
+  id: string;
+  name: string;
+  description: string;
+  region: string;
+}
+
 export interface JourneyDetails {
   days: number;
   state: string;
   itinerary: JourneyItineraryDay[];
-  accommodation?: string[];
-  cuisine?: string[];
-  festivals?: string[];
-  heritageSites?: string[];
-  travelTips?: string[];
+  accommodation: string[];
+  cuisine: string[];
+  festivals: string[];
+  heritageSites: string[];
+  travelTips: string[];
 }
 
-export interface Message {
-  text: string;
-  sender: 'user' | 'bot';
-  type?: 'journey' | 'regular' | 'info';
-  journeyDetails?: JourneyDetails;
-}
-
-export interface StateInfo {
-  id: string;
-  name: string;
-  description?: string;
-  region: string;
+export const COMMAND_PATTERNS = {
+  JOURNEY_PLAN: /plan\s+(?:a|an)\s+(\d+)(?:\s+|\-)?day(?:s)?\s+(?:journey|trip|vacation|visit|itinerary)\s+(?:to|in|for|at)\s+([A-Za-z\s]+)/i,
+  DAYS_AND_STATE: /(\d+)(?:\s+|\-)?days?\s+(?:in|to|for|at)\s+([A-Za-z\s]+)/i,
+  STATE_ONLY: /^(?:visit\s+)?([A-Za-z\s]+)$/i,
+  JUST_DAYS: /^(\d+)(?:\s+|\-)?days?$/i,
+  FOOD_QUERY: /(?:food|cuisine|dishes|eat|try)\s+(?:in|at|from)?\s+([A-Za-z\s]+)?/i,
+  FESTIVAL_QUERY: /(?:festival|celebration|cultural\s+event)s?\s+(?:in|at|of)?\s+([A-Za-z\s]+)?/i,
+  WEATHER_QUERY: /(?:weather|climate|temperature|season|rain|monsoon)\s+(?:in|at|of)?\s+([A-Za-z\s]+)?/i,
+  TRANSPORT_QUERY: /(?:transport|travel|getting\s+around|commute)\s+(?:in|at|within)?\s+([A-Za-z\s]+)?/i,
 }
 
 export const CHATBOT_BACKGROUNDS = {
-  light: "https://r4.wallpaperflare.com/wallpaper/952/786/491/nature-landscape-forest-river-wallpaper-36399499392b36fdd6e46796616d6c0d.jpg",
-  dark: "https://r4.wallpaperflare.com/wallpaper/684/422/438/abstract-3d-digital-art-stu-ballinger-wallpaper-2b965cfd43817fe9f584cbf97d1cfc40.jpg"
-};
+  light: "https://images.unsplash.com/photo-1604147706283-d7119b5b822c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2574&q=80",
+  dark: "https://images.unsplash.com/photo-1605806616949-59450f0e3354?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80"
+}
 
-// Command patterns for the chatbot - enhanced for better recognition
-export const COMMAND_PATTERNS = {
-  // Main patterns for journey planning
-  JOURNEY_PLAN: /(?:plan|create|make|prepare)(?:\s+a)?\s+(\d+)(?:-|\s+)?(?:day|days)(?:\s+(?:journey|trip|tour|travel))?\s+(?:to|in|for|around)\s+([A-Za-z\s]+)/i,
-  DAYS_AND_STATE: /(\d+)(?:\s+|\-)?days?(?:\s+(?:in|to|for|at))?\s+([A-Za-z\s]+)/i,
-  STATE_ONLY: /^(?:visit\s+)?([A-Za-z\s]+)$/i,
-  JUST_DAYS: /^(\d+)(?:\s+|\-)?days?$/i,
-  
-  // Simple forms and variations
-  SIMPLE_STATE: /^([A-Za-z\s]+)$/i,
-  SIMPLE_DAYS_STATE: /^(\d+)\s+([A-Za-z\s]+)$/i,
-  STATE_DAYS: /^([A-Za-z\s]+)\s+(\d+)(?:\s+days?)?$/i,
-  
-  // Query patterns
-  FOOD_QUERY: /(?:food|eat|cuisine)(?:\s+in)?\s+([A-Za-z\s]+)?/i,
-  FESTIVAL_QUERY: /(?:festival|celebrate)(?:\s+in)?\s+([A-Za-z\s]+)?/i,
-  WEATHER_QUERY: /(?:weather|climate)(?:\s+in)?\s+([A-Za-z\s]+)?/i,
-  TRANSPORT_QUERY: /(?:transport|travel|getting\s+around)(?:\s+in)?\s+([A-Za-z\s]+)?/i
-};
+// New OpenAI API integration types
+export interface OpenAIConfig {
+  apiKey: string;
+  model: string;
+  organization?: string;
+  temperature?: number;
+  maxTokens?: number;
+}
+
+export interface ChatbotConfig {
+  useOpenAI: boolean;
+  openAIConfig?: OpenAIConfig;
+  fallbackToTraining: boolean;
+  welcomeMessage: string;
+}
+
+// New multi-provider AI types
+export type AIModelProvider = 'openai' | 'gemini' | 'claude' | 'qwen';
+
+export interface AIConfig {
+  provider: AIModelProvider;
+  apiKey: string;
+  model?: string;
+  temperature?: number;
+  maxTokens?: number;
+}
+
+export interface AIProviderService {
+  generateResponse(
+    prompt: string, 
+    systemPrompt: string, 
+    conversationHistory: {role: string, content: string}[]
+  ): Promise<string>;
+}

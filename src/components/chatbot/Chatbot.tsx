@@ -1,14 +1,16 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Send, Minimize, Maximize, Sparkles } from 'lucide-react';
+import { X, Send, Minimize, Maximize, Sparkles, Bot } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AnimatePresence, motion } from 'framer-motion';
-import { parseJourneyRequest, generateJourneyPlan, getResponseForQuery, generateNewSuggestions } from './ChatbotUtils';
-import { JourneyDetails, Message, CHATBOT_BACKGROUNDS } from './types';
-import { getStateDetails } from './ChatbotUtils';
+import { useTheme } from '@/components/theme/ThemeProvider';
 import ChatbotMessagesContainer from './ChatbotMessagesContainer';
 import ChatbotSuggestions from './ChatbotSuggestions';
-import { useTheme } from '@/components/theme/ThemeProvider';
+import { Message } from './types';
+import { chatbotTrainingData } from './ChatbotTrainingData';
+import { useChatbot } from './ChatbotProvider';
+import { useOpenAIChat } from '@/hooks/use-openai-chat';
+import { generateSuggestions, findResponseFromTrainingData, processLiveDataPlaceholders } from './ChatbotUtils';
 
 interface ChatbotProps {
   isOpen: boolean;
@@ -16,9 +18,11 @@ interface ChatbotProps {
 }
 
 const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
+  const { config } = useChatbot();
+  const { sendMessage, isLoading: openAILoading } = useOpenAIChat();
   const [messages, setMessages] = useState<Message[]>([
     {
-      text: "Namaste! 🙏 I'm your Mystic India Guide. Ask me about India's heritage, states, cuisines, or festivals, or let me help plan your journey.",
+      text: config.welcomeMessage,
       sender: 'bot'
     }
   ]);
@@ -28,7 +32,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
     "Plan a journey to Kerala",
     "Tell me about Indian cuisine",
     "What festivals are in Rajasthan?",
-    "Top heritage sites in India"
+    "Current weather in Delhi"
   ]);
   const [isMinimized, setIsMinimized] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -52,41 +56,50 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
     setInput('');
     setIsLoading(true);
 
-    // Process the message
-    const journeyRequest = parseJourneyRequest(input);
-    
-    setTimeout(() => {
-      if (journeyRequest) {
-        // Generate journey plan
-        const state = getStateDetails(journeyRequest.state);
-        const journeyDetails = generateJourneyPlan(journeyRequest.days, state);
-        
-        // Create response with journey details
-        const botResponse: Message = {
-          text: `Here's your ${journeyRequest.days}-day journey to ${state.name}:`,
-          sender: 'bot',
-          type: 'journey',
-          journeyDetails
-        };
-        
-        setMessages(prev => [...prev, botResponse]);
-        
-        // Generate new suggestions based on the state
-        setSuggestions(generateNewSuggestions(state.name, journeyRequest.days));
+    try {
+      let botResponse: string;
+      
+      if (config.useOpenAI) {
+        // Try using OpenAI
+        botResponse = await sendMessage(input, config.fallbackToTraining);
       } else {
-        // Generate a regular response
-        const responseText = getResponseForQuery(input);
-        const botResponse: Message = {
-          text: responseText,
-          sender: 'bot',
-          type: 'regular'
-        };
-        
-        setMessages(prev => [...prev, botResponse]);
+        // Use only the training data
+        botResponse = findResponseFromTrainingData(input);
       }
       
+      // Process any live data placeholders in the response
+      botResponse = await processLiveDataPlaceholders(botResponse);
+      
+      // Generate new suggestions based on the context
+      const newSuggestions = generateSuggestions(input, botResponse);
+      if (newSuggestions.length > 0) {
+        setSuggestions(newSuggestions);
+      }
+      
+      setMessages(prev => [...prev, {
+        text: botResponse,
+        sender: 'bot'
+      }]);
+    } catch (error) {
+      console.error("Error getting response:", error);
+      
+      // Use fallback to training data
+      let fallbackResponse = findResponseFromTrainingData(input);
+      
+      // Process any live data placeholders in the fallback response
+      try {
+        fallbackResponse = await processLiveDataPlaceholders(fallbackResponse);
+      } catch (processError) {
+        console.error("Error processing live data:", processError);
+      }
+      
+      setMessages(prev => [...prev, {
+        text: fallbackResponse,
+        sender: 'bot'
+      }]);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -106,6 +119,10 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
+  const chatBackground = theme === 'dark'
+    ? "https://images.unsplash.com/photo-1528164344705-47542687000d?q=80&w=1369&auto=format&fit=crop"
+    : "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1471&auto=format&fit=crop";
+
   return (
     <AnimatePresence>
       <motion.div 
@@ -123,7 +140,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
             onClick={toggleMinimize}
           >
             <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center mr-2">
-              <span className="text-white font-bold">AI</span>
+              <Bot className="w-4 h-4 text-white" />
             </div>
             <span className="text-sm font-medium mr-2">Mystic India Guide</span>
             <Maximize className="h-4 w-4 text-gray-500" />
@@ -144,7 +161,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
             >
               <div className="flex items-center">
                 <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center mr-2">
-                  <span className="text-indigo-600 font-bold text-xs">AI</span>
+                  <Bot className="w-3 h-3 text-indigo-600" />
                 </div>
                 <h3 className="text-white font-medium">Mystic India Guide</h3>
               </div>
@@ -163,6 +180,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
               messages={messages} 
               isLoading={isLoading}
               theme={theme}
+              backgroundImage={chatBackground}
             />
             
             {/* Suggestions */}

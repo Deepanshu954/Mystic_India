@@ -29,9 +29,10 @@ const LazyImage = memo(({
   const [isLoaded, setIsLoaded] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const isStatePage = location.pathname.includes('/state/');
   
-  // Skip lazy loading animation on home page or when immediate prop is true
-  const skipLazyEffects = isHomePage || immediate === true || priority === true;
+  // Skip lazy loading animation on home page, state pages, or when immediate prop is true
+  const skipLazyEffects = isHomePage || isStatePage || immediate === true || priority === true;
   
   const { imageSrc, setImageRef, onLoad, onError } = useImageLazyLoad(
     src,
@@ -63,7 +64,7 @@ const LazyImage = memo(({
   }, [src, skipLazyEffects]);
 
   useEffect(() => {
-    // If we're on home page or priority image, set as loaded immediately
+    // If we're on home page, state page or priority image, set as loaded immediately
     if (skipLazyEffects) {
       setIsLoaded(true);
     }
@@ -83,8 +84,8 @@ const LazyImage = memo(({
           isLoaded && "opacity-100",
           className
         )}
-        loading={priority ? "eager" : "lazy"}
-        decoding={priority ? "sync" : "async"}
+        loading={priority || skipLazyEffects ? "eager" : "lazy"}
+        decoding={priority || skipLazyEffects ? "sync" : "async"}
         {...props}
       />
       {!isLoaded && !skipLazyEffects && (

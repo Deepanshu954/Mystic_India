@@ -3,8 +3,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import { useScrollToTop } from "./hooks/useScrollToTop";
 import Index from "./pages/Index";
 import StateDetail from "./pages/StateDetail";
 import Admin from "./pages/Admin";
@@ -20,7 +21,18 @@ import JourneyDetail from "./pages/JourneyDetail";
 import JourneyPlanner from "./pages/JourneyPlanner";
 import { useEffect } from "react";
 import { ThemeProvider } from "./components/theme/ThemeProvider";
-import { ChatbotProvider } from "./components/chatbot/ChatbotProvider";
+import { ChatbotProvider } from "@/components/chatbot/ChatbotProvider";
+
+// ScrollToTop component to ensure each page starts at the top
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  
+  return null;
+};
 
 const queryClient = new QueryClient();
 
@@ -39,6 +51,7 @@ const App = () => {
               <Toaster />
               <Sonner />
               <BrowserRouter>
+                <ScrollToTop />
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/states" element={<AllStates />} />

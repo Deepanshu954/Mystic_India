@@ -176,6 +176,8 @@ const States: React.FC = () => {
                             src={state.bannerImage} 
                             alt={state.name} 
                             className="w-full h-full object-cover"
+                            priority={true}
+                            immediate={true}
                           />
                         </div>
                       </ParallaxSection>

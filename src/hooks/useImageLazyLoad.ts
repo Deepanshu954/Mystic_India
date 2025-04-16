@@ -22,11 +22,12 @@ const useImageLazyLoad = (
   const isMounted = useRef(true);
   const location = useLocation();
   
-  // Check if we're on the home page
+  // Check if we're on the home page or state pages
   const isHomePage = location.pathname === '/';
+  const isStatePage = location.pathname.includes('/state/');
 
-  // If on home page or immediate option is true, skip lazy loading
-  const skipLazyLoad = isHomePage || options.immediate === true || options.priority === true;
+  // If on home page, state page or immediate option is true, skip lazy loading
+  const skipLazyLoad = isHomePage || isStatePage || options.immediate === true || options.priority === true;
 
   const { threshold = 0.1, rootMargin = '200px' } = options;
 
@@ -45,7 +46,7 @@ const useImageLazyLoad = (
     }
   }, [placeholderSrc, src]);
 
-  // Immediately load priority images or on home page
+  // Immediately load priority images or on home/state pages
   useEffect(() => {
     if (skipLazyLoad && !isLoaded && !hasError) {
       const img = new Image();
@@ -76,7 +77,7 @@ const useImageLazyLoad = (
           /unsplash\.com\/.*/, 
           `picsum.photos/${Math.floor(800 + Math.random() * 400)}/${Math.floor(600 + Math.random() * 200)}`
         );
-      } else if (src.includes('images.')) {
+      } else if (src.includes('images.') || src.includes('previews.') || src.includes('shutterstock')) {
         // General fallback for any image URL
         fallbackSrc = `https://picsum.photos/800/600?random=${Math.floor(Math.random() * 1000)}`;
       }

@@ -2,26 +2,29 @@
 import React from 'react';
 import { MessageSquareText } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useChatbot } from '@/components/chatbot/ChatbotProvider';
 
 interface AIHelpButtonProps {
   question?: string;
   className?: string;
   variant?: 'icon' | 'text' | 'pill';
   label?: string;
+  onClick?: () => void;
 }
 
 const AIHelpButton: React.FC<AIHelpButtonProps> = ({ 
   question,
   className = "",
   variant = "icon",
-  label = "Ask AI"
+  label = "Ask AI",
+  onClick
 }) => {
-  const { openChatbot } = useChatbot();
-
   const handleClick = () => {
-    // TODO: In the future, we could pre-fill the chatbot input with the question
-    openChatbot();
+    if (onClick) {
+      onClick();
+    } else {
+      // Default fallback behavior
+      console.log("AI Help button clicked", question);
+    }
   };
 
   if (variant === 'icon') {

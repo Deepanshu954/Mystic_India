@@ -1,6 +1,6 @@
 
 import React, { useRef, useEffect } from 'react';
-import { Message, CHATBOT_BACKGROUNDS } from './types';
+import { Message } from './types';
 import ChatbotMessage from './ChatbotMessage';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -8,12 +8,14 @@ interface ChatbotMessagesContainerProps {
   messages: Message[];
   isLoading: boolean;
   theme: string;
+  backgroundImage?: string;
 }
 
 const ChatbotMessagesContainer: React.FC<ChatbotMessagesContainerProps> = ({ 
   messages, 
   isLoading,
-  theme 
+  theme,
+  backgroundImage
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -29,10 +31,12 @@ const ChatbotMessagesContainer: React.FC<ChatbotMessagesContainerProps> = ({
     <div 
       className="h-[350px] overflow-y-auto py-3 px-4 scrollbar-hide"
       style={{ 
-        backgroundImage: `url(${theme === 'dark' ? CHATBOT_BACKGROUNDS.dark : CHATBOT_BACKGROUNDS.light})`,
+        backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundAttachment: 'fixed'
+        backgroundAttachment: 'fixed',
+        backgroundBlendMode: 'soft-light',
+        backgroundColor: theme === 'dark' ? 'rgba(17, 24, 39, 0.8)' : 'rgba(255, 255, 255, 0.8)'
       }}
     >
       <AnimatePresence initial={false}>

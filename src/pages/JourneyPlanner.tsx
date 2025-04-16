@@ -15,12 +15,15 @@ import { stateData } from '@/data/stateData';
 import { JourneyItineraryDay } from '@/components/chatbot/types';
 import PlannerAIAssistant from '@/components/journey/PlannerAIAssistant';
 import { Link } from 'react-router-dom';
+import { useScrollToTop } from '@/hooks/useScrollToTop';
 
 const JourneyPlanner = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, addTrip } = useAuth();
   const [showAIAssistant, setShowAIAssistant] = useState(false);
+  
+  useScrollToTop(true);
   
   const [journeyData, setJourneyData] = useState({
     title: '',
@@ -44,10 +47,6 @@ const JourneyPlanner = () => {
   });
 
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top of the page on component mount
-  }, []);
-
-  useEffect(() => {
     if (!user) {
       toast({
         title: "Login Required",
@@ -57,7 +56,6 @@ const JourneyPlanner = () => {
       navigate('/login');
     }
     
-    // Check if we have journey data from navigation state
     if (location.state?.journey) {
       const existingJourney = location.state.journey;
       setJourneyData({
@@ -73,6 +71,8 @@ const JourneyPlanner = () => {
         itinerary: existingJourney.itinerary || journeyData.itinerary
       });
     }
+    
+    window.scrollTo(0, 0);
   }, [user, navigate, location.state]);
 
   const addDay = () => {
@@ -257,7 +257,6 @@ const JourneyPlanner = () => {
       return;
     }
 
-    // Prepare timeline data for journey overview
     const timeline = journeyData.itinerary.map(day => {
       const activities = day.activities && day.activities.length > 0 && day.activities[0] 
         ? day.activities 
@@ -628,7 +627,6 @@ const JourneyPlanner = () => {
                         </Tabs>
                         
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                          {/* Places to Visit */}
                           <div className="border rounded-lg p-4 space-y-3">
                             <div className="flex justify-between items-center">
                               <div className="flex items-center gap-2">
@@ -665,7 +663,6 @@ const JourneyPlanner = () => {
                             ))}
                           </div>
                           
-                          {/* Cuisine */}
                           <div className="border rounded-lg p-4 space-y-3">
                             <div className="flex justify-between items-center">
                               <div className="flex items-center gap-2">
@@ -702,7 +699,6 @@ const JourneyPlanner = () => {
                             ))}
                           </div>
                           
-                          {/* Art Forms */}
                           <div className="border rounded-lg p-4 space-y-3">
                             <div className="flex justify-between items-center">
                               <div className="flex items-center gap-2">

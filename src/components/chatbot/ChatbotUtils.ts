@@ -1,474 +1,390 @@
+import { chatbotTrainingData } from './ChatbotTrainingData';
+import liveDataService from '@/services/live-data-service';
 
-import { regions, getStateRegion } from '@/data/cultural';
-import { festivals } from '@/data/cultural/festivals';
-import { heritageSites } from '@/data/cultural/heritageSites';
-import { culturalData } from '@/data/culturalData';
-import { stateData } from '@/data/stateData';
-import { JourneyDetails, JourneyItineraryDay, StateInfo, COMMAND_PATTERNS } from './types';
-
-// Common accommodation options by region
-const accommodationByRegion: { [key: string]: string[] } = {
-  'north-india': ['Heritage Haveli Stay', 'Mountain Resort', 'Luxury Palace Hotel', 'Boutique Guesthouse'],
-  'south-india': ['Beachside Resort', 'Kerala Houseboat', 'Heritage Homestay', 'Plantation Retreat'],
-  'east-india': ['Colonial Heritage Hotel', 'Riverside Resort', 'Eco-Friendly Lodge', 'Boutique Retreat'],
-  'west-india': ['Desert Camp', 'Palace Hotel', 'Beachfront Resort', 'Heritage Homestay'],
-  'central-india': ['Jungle Lodge', 'Heritage Hotel', 'Boutique Stay', 'Wildlife Resort'],
-  'northeast-india': ['Mountain Retreat', 'Bamboo Hut Stay', 'Eco Resort', 'Riverside Lodge']
-};
-
-// Regional cuisine highlights
-const cuisineByRegion: { [key: string]: string[] } = {
-  'north-india': ['Butter Chicken & Naan', 'Kebabs & Biryanis', 'Chole Bhature', 'Rajasthani Thali'],
-  'south-india': ['Masala Dosa & Idli', 'Kerala Fish Curry', 'Hyderabadi Biryani', 'Appam & Stew'],
-  'east-india': ['Bengali Fish Curry', 'Litti Chokha', 'Momos & Thukpa', 'Rasgulla & Sweets'],
-  'west-india': ['Gujarati Thali', 'Vada Pav & Street Food', 'Goan Fish Curry', 'Dal Baati Churma'],
-  'central-india': ['Poha & Jalebi', 'Bhutte Ka Kees', 'Indori Chaat', 'Rogan Josh'],
-  'northeast-india': ['Bamboo Shoot Dishes', 'Smoked Meat Specialties', 'Axone', 'Rice Beer']
-};
-
-// Travel tips
-const travelTips: string[] = [
-  'Carry a refillable water bottle to stay hydrated throughout your journey',
-  'Respect local customs and dress modestly, especially when visiting religious sites',
-  'Try local street food but ensure it\'s from hygienic and popular vendors',
-  'Use ride-sharing apps or pre-paid taxis for convenient and safe transportation',
-  'Learn a few basic phrases in the local language to connect with locals',
-  'Keep a small medical kit with essential medications for emergencies',
-  'Check the weather forecast before planning your daily activities',
-  'Carry cash as many small establishments don\'t accept cards',
-  'Consider hiring a local guide for authentic insights into the culture and history',
-  'Pack light and comfortable clothing suitable for the region\'s climate'
-];
-
-// Helper functions
-export const getStateDetails = (stateName: string): StateInfo => {
-  // Clean and normalize the state name for better matching
-  const normalizedName = stateName.toLowerCase().trim().replace(/\s+/g, '-');
+// Find a response from training data based on user input
+export const findResponseFromTrainingData = (query: string): string => {
+  // Convert query to lowercase for case-insensitive matching
+  const lowerQuery = query.toLowerCase();
   
-  // First try to find an exact match by id
-  let state = stateData.find(s => s.id.toLowerCase() === normalizedName);
-  
-  // If no exact match, try partial matches with name
-  if (!state) {
-    state = stateData.find(s => 
-      s.name.toLowerCase() === stateName.toLowerCase().trim() ||
-      s.name.toLowerCase().includes(stateName.toLowerCase().trim())
-    );
+  // Check if this is a live data request
+  const liveDataResponse = matchLiveDataRequest(query);
+  if (liveDataResponse) {
+    // Return a placeholder that will be replaced with actual live data
+    return liveDataResponse;
   }
   
-  // If still no match, just use what was provided
-  if (!state) {
-    const fallbackId = normalizedName || 'unknown-state';
-    return {
-      id: fallbackId,
-      name: stateName || 'Unknown State',
-      description: `Explore the beauty and culture of ${stateName || 'this region'}`,
-      region: getStateRegion(fallbackId) || 'north-india'
-    };
+  // Check for state capital queries first
+  const stateCapitalResponse = matchStateCapital(lowerQuery);
+  if (stateCapitalResponse) {
+    return stateCapitalResponse;
   }
   
-  return {
-    id: state.id,
-    name: state.name,
-    description: state.description || `Explore the beauty and culture of ${state.name}`,
-    region: state.region || getStateRegion(state.id) || 'north-india'
-  };
-};
-
-export const getStateImage = (stateId: string): string => {
-  // Try to get the banner image from stateData first
-  const state = stateData.find(s => s.id.toLowerCase() === stateId.toLowerCase());
-  if (state && state.bannerImage) {
-    return state.bannerImage;
-  }
-  
-  // Fallback to predefined images
-  const images: {[key: string]: string} = {
-    'rajasthan': 'https://images.unsplash.com/photo-1582972236019-e3d10dae4d3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    'kerala': 'https://images.unsplash.com/photo-1589394815804-964a0f200d78?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    'goa': 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    'uttar-pradesh': 'https://images.unsplash.com/photo-1564507592333-c60657eea523?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
-    'delhi': 'https://images.unsplash.com/photo-1587474260584-136574528ed5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    'default': 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
-  };
-  
-  return images[stateId.toLowerCase()] || images['default'];
-};
-
-export const getStateFestivals = (stateId: string): string[] => {
-  const stateFestivals = festivals
-    .filter(festival => festival.stateId === stateId)
-    .slice(0, 3)
-    .map(festival => `${festival.name} (${festival.timing})`);
-  
-  if (stateFestivals.length > 0) {
-    return stateFestivals;
-  }
-  
-  // Fallback to defaults if no state-specific festivals found
-  return ['Diwali (October/November)', 'Holi (March)', 'Local Cultural Celebrations (Year-round)'];
-};
-
-export const getStateHeritageSites = (stateId: string): string[] => {
-  const stateSites = heritageSites
-    .filter(site => site.stateId === stateId)
-    .slice(0, 3)
-    .map(site => site.name);
-  
-  if (stateSites.length > 0) {
-    return stateSites;
-  }
-  
-  // Fallback to some generic heritage sites if none found
-  return ['Historical Monuments', 'Ancient Temples', 'Local Heritage Sites'];
-};
-
-export const getRandomState = (excludeState: string): string => {
-  const popularStates = stateData
-    .filter(state => state.id.toLowerCase() !== excludeState.toLowerCase())
-    .map(state => state.name);
-  
-  if (popularStates.length === 0) {
-    return 'Rajasthan'; // Fallback
-  }
-  
-  return popularStates[Math.floor(Math.random() * popularStates.length)];
-};
-
-export const extractNumbers = (text: string): number[] => {
-  const matches = text.match(/\d+/g);
-  return matches ? matches.map(match => parseInt(match, 10)) : [];
-};
-
-export const extractFirstNumber = (text: string): number | null => {
-  const numbers = extractNumbers(text);
-  return numbers.length > 0 ? numbers[0] : null;
-};
-
-export const parseJourneyRequest = (text: string): { days: number; state: string } | null => {
-  // The most common pattern: "plan a X-day journey to Y"
-  const journeyMatch = text.match(COMMAND_PATTERNS.JOURNEY_PLAN);
-  if (journeyMatch) {
-    return {
-      days: parseInt(journeyMatch[1]),
-      state: journeyMatch[2].trim()
-    };
-  }
-  
-  // Simple pattern: "X days in Y"
-  const daysStateMatch = text.match(COMMAND_PATTERNS.DAYS_AND_STATE);
-  if (daysStateMatch) {
-    return {
-      days: parseInt(daysStateMatch[1]),
-      state: daysStateMatch[2].trim()
-    };
-  }
-  
-  // Just a state name, default to 3 days
-  const stateOnlyMatch = text.match(COMMAND_PATTERNS.STATE_ONLY);
-  if (stateOnlyMatch) {
-    const potentialState = stateOnlyMatch[1].trim();
-    // Verify this is actually a state name
-    const isValidState = stateData.some(s => 
-      s.name.toLowerCase().includes(potentialState.toLowerCase()) ||
-      s.id.toLowerCase().includes(potentialState.toLowerCase().replace(/\s+/g, '-'))
-    );
-    
-    if (isValidState) {
-      return {
-        days: 3, // Default to 3 days
-        state: potentialState
-      };
+  // Try to find an exact match
+  for (const item of chatbotTrainingData) {
+    for (const pattern of item.patterns) {
+      if (lowerQuery.includes(pattern.toLowerCase())) {
+        return getRandomResponse(item.responses);
+      }
     }
   }
   
-  // Just days mentioned, assume the user wants to specify the state later
-  const justDaysMatch = text.match(COMMAND_PATTERNS.JUST_DAYS);
-  if (justDaysMatch) {
-    return {
-      days: parseInt(justDaysMatch[1]),
-      state: 'Rajasthan' // Default to a popular state
-    };
+  // If no exact match, try to find the best fuzzy match
+  let bestMatch = { score: 0, response: "" };
+  
+  for (const item of chatbotTrainingData) {
+    for (const pattern of item.patterns) {
+      const score = calculateSimilarity(lowerQuery, pattern.toLowerCase());
+      if (score > bestMatch.score && score > 0.4) { // Threshold for relevance
+        bestMatch = { 
+          score, 
+          response: getRandomResponse(item.responses) 
+        };
+      }
+    }
   }
   
-  // Last resort: Try to find any number and any state name
-  const days = extractFirstNumber(text) || 3;
+  if (bestMatch.response) {
+    return bestMatch.response;
+  }
   
-  // Try to extract a state name by checking if any state name is contained in the text
-  for (const state of stateData) {
-    if (text.toLowerCase().includes(state.name.toLowerCase()) ||
-        text.toLowerCase().includes(state.id.toLowerCase())) {
-      return {
-        days,
-        state: state.name
-      };
+  // Fallback response if no match found
+  return "I'm not sure I understand that question. Could you rephrase it or ask about India's states, capitals, culture, cuisine, or travel destinations?";
+};
+
+// Check if query is requesting live data
+export const matchLiveDataRequest = (query: string): string | null => {
+  const lowerQuery = query.toLowerCase();
+  
+  // Weather data patterns
+  const weatherPatterns = [
+    /weather (?:in|at|of) ([\w\s]+)/i,
+    /(?:current|today's|today) weather (?:in|at|of)? ([\w\s]+)/i,
+    /temperature (?:in|at|of) ([\w\s]+)/i,
+    /how (?:is|was) the weather (?:in|at|of) ([\w\s]+)/i,
+    /climate (?:in|at|of) ([\w\s]+)/i
+  ];
+  
+  // News data patterns
+  const newsPatterns = [
+    /(?:current|latest|recent|today's) news/i,
+    /news (?:in|about|from) india/i,
+    /what(?:'s| is) happening in india/i,
+    /india(?:n)? news/i
+  ];
+  
+  // Tourism data patterns
+  const tourismPatterns = [
+    /tourism (?:in|of|about) india/i,
+    /(?:popular|top) (?:destinations|places|spots)/i,
+    /(?:travel|tourist) information/i,
+    /(?:visit|visiting) india/i,
+    /tourism (?:statistics|stats|numbers|figures)/i
+  ];
+  
+  // Currency data patterns
+  const currencyPatterns = [
+    /(?:currency|exchange) rate/i,
+    /(?:value|worth) of (?:indian )?rupee/i,
+    /(?:current|today's) (?:currency|exchange) rate/i,
+    /rupee (?:to|vs|against) (?:dollar|euro|pound)/i,
+    /inr (?:to|vs|against) (?:usd|eur|gbp)/i
+  ];
+  
+  // Check for weather requests
+  for (const pattern of weatherPatterns) {
+    const match = lowerQuery.match(pattern);
+    if (match && match[1]) {
+      const location = match[1].trim();
+      // Return a placeholder with the location
+      return `[LIVE_WEATHER:${location}]`;
+    }
+  }
+  
+  // Check for news requests
+  for (const pattern of newsPatterns) {
+    if (pattern.test(lowerQuery)) {
+      return '[LIVE_NEWS]';
+    }
+  }
+  
+  // Check for tourism info requests
+  for (const pattern of tourismPatterns) {
+    if (pattern.test(lowerQuery)) {
+      return '[LIVE_TOURISM]';
+    }
+  }
+  
+  // Check for currency rates requests
+  for (const pattern of currencyPatterns) {
+    if (pattern.test(lowerQuery)) {
+      return '[LIVE_CURRENCY]';
     }
   }
   
   return null;
 };
 
-export const generateJourneyPlan = (days: number, state: StateInfo): JourneyDetails => {
-  const stateId = state.id;
-  const regionId = state.region || 'north-india';
-  
-  // Create itinerary based on number of days
-  let itinerary: JourneyItineraryDay[] = [];
-  const dayTitles = [
-    "Arrival & Cultural Immersion",
-    "Historical Exploration",
-    "Nature & Adventure",
-    "Local Culture & Cuisine",
-    "Art & Crafts Discovery",
-    "Spiritual Journey",
-    "Leisure & Relaxation",
-    "Wildlife & Natural Beauty",
-    "Urban Exploration",
-    "Shopping & Souvenirs",
-    "Village Life Experience",
-    "Festival & Celebrations",
-    "Departure Day"
+// Special matcher for state capital queries
+const matchStateCapital = (query: string): string | null => {
+  // Common patterns for capital questions
+  const capitalPatterns = [
+    /capital of ([\w\s]+)/i,
+    /what is the capital of ([\w\s]+)/i,
+    /([\w\s]+) capital city/i,
+    /([\w\s]+) capital/i
   ];
   
-  const morningActivities = [
-    "Sunrise visit to famous viewpoint",
-    "Morning heritage walk through old town",
-    "Visit to local temples/religious sites",
-    "Breakfast at a famous local eatery",
-    "Early wildlife safari/nature walk",
-    "Visit to museums and art galleries",
-    "Morning yoga/meditation session"
-  ];
-  
-  const afternoonActivities = [
-    "Explore historical monuments/forts",
-    "Lunch featuring local delicacies",
-    "Shopping for local handicrafts",
-    "Visit to cultural village/tribal area",
-    "Boating/river cruise experience",
-    "Cooking class with local chef",
-    "Visit to spice/tea plantations"
-  ];
-  
-  const eveningActivities = [
-    "Attend cultural performance/folk dance",
-    "Sunset boat ride/viewpoint visit",
-    "Food tour of street delicacies",
-    "Evening aarti/religious ceremony",
-    "Relaxing spa treatment with local herbs",
-    "Bonfire with local music and stories",
-    "Stargazing in remote locations"
-  ];
-  
-  // Add special city-specific activities
-  const specialActivities: {[key: string]: string[]} = {
-    'delhi': [
-      "Visit the iconic Red Fort",
-      "Explore the bustling markets of Chandni Chowk",
-      "Tour the Qutub Minar complex",
-      "Visit India Gate and Rashtrapati Bhavan",
-      "Experience the light and sound show at Purana Qila"
-    ],
-    'rajasthan': [
-      "Desert camel safari with sunset views",
-      "Visit the majestic Mehrangarh Fort",
-      "Explore the blue city of Jodhpur",
-      "Shop for traditional textiles in Jaipur",
-      "Take a boat ride on Lake Pichola in Udaipur"
-    ],
-    'kerala': [
-      "Backwater houseboat experience",
-      "Ayurvedic spa treatment",
-      "Visit tea plantations in Munnar",
-      "Explore the spice markets of Kochi",
-      "Witness Kathakali dance performance"
-    ],
-    'goa': [
-      "Beach time with water sports",
-      "Visit the historic Basilica of Bom Jesus",
-      "Enjoy a sunset cruise on the Mandovi River",
-      "Explore the spice plantations",
-      "Experience the vibrant nightlife"
-    ],
-    'tamil-nadu': [
-      "Visit the magnificent Meenakshi Temple in Madurai",
-      "Explore the shore temples of Mahabalipuram",
-      "Tour the Thanjavur Brihadeeswarar Temple",
-      "Experience Chettinad cuisine and architecture",
-      "Visit hill stations like Ooty or Kodaikanal"
-    ],
-    'himachal-pradesh': [
-      "Trek through the stunning mountain trails",
-      "Visit the Dalai Lama's residence in McLeod Ganj",
-      "Enjoy paragliding in Bir Billing",
-      "Experience the local Himachali cuisine",
-      "Explore the ancient temples in the hills"
-    ],
-    'uttar-pradesh': [
-      "Visit the iconic Taj Mahal in Agra",
-      "Experience the spiritual rituals in Varanasi",
-      "Explore the historic Fatehpur Sikri",
-      "Attend the evening Ganga Aarti in Varanasi",
-      "Tour the architectural wonders of Lucknow"
-    ]
+  // Map of states to their capitals
+  const stateCapitals: {[key: string]: string} = {
+    'andhra pradesh': 'Amaravati (planned capital) and Visakhapatnam (administrative capital)',
+    'arunachal pradesh': 'Itanagar',
+    'assam': 'Dispur',
+    'bihar': 'Patna',
+    'chhattisgarh': 'Raipur',
+    'goa': 'Panaji',
+    'gujarat': 'Gandhinagar',
+    'haryana': 'Chandigarh',
+    'himachal pradesh': 'Shimla',
+    'jharkhand': 'Ranchi',
+    'karnataka': 'Bengaluru (Bangalore)',
+    'kerala': 'Thiruvananthapuram (Trivandrum)',
+    'madhya pradesh': 'Bhopal',
+    'maharashtra': 'Mumbai',
+    'manipur': 'Imphal',
+    'meghalaya': 'Shillong',
+    'mizoram': 'Aizawl',
+    'nagaland': 'Kohima',
+    'odisha': 'Bhubaneswar',
+    'punjab': 'Chandigarh',
+    'rajasthan': 'Jaipur',
+    'sikkim': 'Gangtok',
+    'tamil nadu': 'Chennai',
+    'telangana': 'Hyderabad',
+    'tripura': 'Agartala',
+    'uttar pradesh': 'Lucknow',
+    'uttarakhand': 'Dehradun',
+    'west bengal': 'Kolkata',
+    'delhi': 'New Delhi',
+    'puducherry': 'Puducherry',
+    'jammu and kashmir': 'Srinagar (Summer) and Jammu (Winter)',
+    'ladakh': 'Leh'
   };
   
-  for (let i = 0; i < days; i++) {
-    const dayNum = i + 1;
-    const isFirstDay = dayNum === 1;
-    const isLastDay = dayNum === days;
+  // Check if query is directly asking for a capital
+  for (const pattern of capitalPatterns) {
+    const match = query.match(pattern);
+    if (match && match[1]) {
+      const stateName = match[1].toLowerCase().trim();
+      if (stateCapitals[stateName]) {
+        return `The capital of ${match[1]} is ${stateCapitals[stateName]}.`;
+      }
+    }
+  }
+  
+  // Check if the query mentions a state
+  for (const state in stateCapitals) {
+    if (query.includes(state)) {
+      return `The capital of ${state} is ${stateCapitals[state]}.`;
+    }
+  }
+  
+  return null;
+};
+
+// Calculate similarity between two strings
+export const calculateSimilarity = (str1: string, str2: string): number => {
+  // Simple similarity calculation
+  const words1 = str1.split(' ');
+  const words2 = str2.split(' ');
+  
+  let matchCount = 0;
+  for (const word1 of words1) {
+    if (word1.length <= 2) continue; // Skip small words
     
-    let title = dayTitles[i % dayTitles.length];
-    if (isFirstDay) title = "Arrival & Cultural Immersion";
-    if (isLastDay) title = "Concluding Experiences & Departure";
-    
-    const dayActivities = [];
-    
-    if (isFirstDay) {
-      dayActivities.push("Arrive in " + state.name);
-      dayActivities.push("Check-in at your accommodation");
-      dayActivities.push("Orientation walk to get familiar with surroundings");
-    } else if (isLastDay) {
-      dayActivities.push("Last-minute souvenir shopping");
-      dayActivities.push("Farewell meal at a renowned local restaurant");
-      dayActivities.push("Departure and transfer to airport/station");
+    for (const word2 of words2) {
+      if (word2.length <= 2) continue;
+      if (word1 === word2 || word1.includes(word2) || word2.includes(word1)) {
+        matchCount++;
+        break;
+      }
+    }
+  }
+  
+  return matchCount / Math.max(words1.length, words2.length);
+};
+
+// Get a random response from an array of responses
+export const getRandomResponse = (responses: string[]): string => {
+  return responses[Math.floor(Math.random() * responses.length)];
+};
+
+// Generate suggestions based on user query and bot response
+export const generateSuggestions = (query: string, response: string): string[] => {
+  // Extract topic from query
+  const locationMatch = query.match(/\b(kerala|goa|rajasthan|delhi|mumbai|kolkata|tamil nadu|karnataka)\b/i);
+  const location = locationMatch ? locationMatch[0] : null;
+  
+  // Check for query type
+  const isAboutFood = /food|cuisine|eat|dish/i.test(query);
+  const isAboutCulture = /culture|tradition|art|dance|music/i.test(query);
+  const isAboutTravel = /travel|visit|journey|trip|tour/i.test(query);
+  const isAboutFestival = /festival|celebration|event/i.test(query);
+  const isAboutGeography = /capital|map|location|where is|situated|located/i.test(query);
+  const isAboutWeather = /weather|temperature|climate|rain/i.test(query);
+  const isAboutNews = /news|current events|latest|happening/i.test(query);
+  const isAboutShopping = /shop|buy|market|bazaar|mall/i.test(query);
+  const isAboutHistory = /history|historical|ancient|heritage|monument/i.test(query);
+  const isAboutTransport = /transport|travel|how to reach|getting|metro|train|flight/i.test(query);
+  
+  // Generate related suggestions
+  const suggestions: string[] = [];
+  
+  if (location) {
+    if (isAboutFood) {
+      suggestions.push(`Famous restaurants in ${location}`);
+      suggestions.push(`Traditional dishes of ${location}`);
+    } else if (isAboutCulture) {
+      suggestions.push(`${location} traditional art forms`);
+      suggestions.push(`Cultural heritage of ${location}`);
+    } else if (isAboutTravel) {
+      suggestions.push(`Hidden gems in ${location}`);
+      suggestions.push(`Best time to visit ${location}`);
+    } else if (isAboutShopping) {
+      suggestions.push(`Shopping markets in ${location}`);
+      suggestions.push(`What to buy in ${location}`);
     } else {
-      const morning = morningActivities[Math.floor(Math.random() * morningActivities.length)];
-      const afternoon = afternoonActivities[Math.floor(Math.random() * afternoonActivities.length)];
-      const evening = eveningActivities[Math.floor(Math.random() * eveningActivities.length)];
-      
-      dayActivities.push("Morning: " + morning);
-      dayActivities.push("Afternoon: " + afternoon);
-      dayActivities.push("Evening: " + evening);
+      suggestions.push(`Tourist attractions in ${location}`);
+      suggestions.push(`How to reach ${location}`);
+      suggestions.push(`Weather in ${location}`);
     }
-    
-    // Add one more state-specific activity
-    if (!isLastDay) {
-      const stateSpecifics = specialActivities[stateId.toLowerCase()] || 
-                            ["Special: Visit to a hidden local gem"];
-      
-      dayActivities.push("Special: " + 
-        stateSpecifics[Math.floor(Math.random() * stateSpecifics.length)]);
+  } else {
+    // Add general suggestions based on query type
+    if (isAboutGeography) {
+      suggestions.push("Capital cities of India");
+      suggestions.push("Major cities in South India");
+      suggestions.push("States of North India");
+    } else if (isAboutFood) {
+      suggestions.push("Famous street foods of India");
+      suggestions.push("Traditional Indian desserts");
+      suggestions.push("Regional cuisines of India");
+    } else if (isAboutHistory) {
+      suggestions.push("Ancient temples of India");
+      suggestions.push("Historical monuments");
+      suggestions.push("UNESCO sites in India");
+    } else if (isAboutTransport) {
+      suggestions.push("Indian Railways information");
+      suggestions.push("Metro cities in India");
+      suggestions.push("Domestic airports");
+    } else {
+      suggestions.push("Popular tourist destinations");
+      suggestions.push("Best time to visit India");
+      suggestions.push("Indian cultural festivals");
+      suggestions.push("Adventure sports in India");
     }
-    
-    itinerary.push({
-      day: dayNum,
-      title: title,
-      activities: dayActivities,
-      image: getStateImage(stateId),
-      timeOfDay: isFirstDay ? 'afternoon' : isLastDay ? 'morning' : undefined
-    });
   }
   
-  // Get region-specific accommodations and cuisine
-  const accommodations = accommodationByRegion[regionId] || accommodationByRegion['north-india'];
-  const cuisines = cuisineByRegion[regionId] || cuisineByRegion['north-india'];
-  
-  // Get state-specific festivals and heritage sites
-  const stateFestivals = getStateFestivals(stateId);
-  const stateHeritageSites = getStateHeritageSites(stateId);
-  
-  // Select random travel tips
-  const randomTips = [...travelTips]
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 3);
-
-  return {
-    days,
-    state: state.name,
-    itinerary,
-    accommodation: accommodations,
-    cuisine: cuisines,
-    festivals: stateFestivals,
-    heritageSites: stateHeritageSites,
-    travelTips: randomTips
-  };
+  // Return 4 unique suggestions
+  return Array.from(new Set(suggestions)).slice(0, 4);
 };
 
-export const getResponseForQuery = (query: string): string => {
-  const lowerQuery = query.toLowerCase();
+// Process live data placeholders in bot responses
+export const processLiveDataPlaceholders = async (response: string): Promise<string> => {
+  // Check if the response contains any live data placeholders
+  if (!response.includes('[LIVE_')) {
+    return response;
+  }
   
-  // Food/cuisine query with optional state
-  const foodMatch = query.match(COMMAND_PATTERNS.FOOD_QUERY);
-  if (foodMatch) {
-    const stateName = foodMatch[1];
-    if (stateName) {
-      const state = getStateDetails(stateName);
-      const regionId = state.region || 'north-india';
-      const cuisines = cuisineByRegion[regionId] || cuisineByRegion['north-india'];
-      
-      return `In ${state.name}, you must try ${cuisines.join(', ')}. The local cuisine reflects the region's culture and traditions. Ask me to plan a full journey to ${state.name} to experience more!`;
+  let processedResponse = response;
+  
+  // Process weather data
+  const weatherMatch = response.match(/\[LIVE_WEATHER:([\w\s]+)\]/);
+  if (weatherMatch && weatherMatch[1]) {
+    const location = weatherMatch[1];
+    try {
+      const weatherData = await liveDataService.getWeather(location);
+      if (weatherData.success) {
+        const weatherText = liveDataService.formatWeatherResponse(weatherData.data);
+        processedResponse = processedResponse.replace(weatherMatch[0], weatherText);
+      } else {
+        processedResponse = processedResponse.replace(
+          weatherMatch[0], 
+          `I couldn't retrieve the current weather for ${location}. Please try again later.`
+        );
+      }
+    } catch (error) {
+      console.error("Error processing weather data:", error);
+      processedResponse = processedResponse.replace(
+        weatherMatch[0], 
+        `I'm having trouble accessing weather information right now. Please try again later.`
+      );
     }
-    
-    return "Indian cuisine is diverse and varies by region. North India is known for its rich curries and breads, South India for rice-based dishes and dosas, East India for sweets and fish curries, and West India for its vegetarian dishes and street food. I can help you plan a journey with culinary experiences - just ask me to plan a trip to a specific state!";
   }
   
-  // Festival query with optional state
-  const festivalMatch = query.match(COMMAND_PATTERNS.FESTIVAL_QUERY);
-  if (festivalMatch) {
-    const stateName = festivalMatch[1];
-    if (stateName) {
-      const state = getStateDetails(stateName);
-      const festivals = getStateFestivals(state.id);
-      
-      return `${state.name} celebrates wonderful festivals including ${festivals.join(', ')}. Ask me to plan a full journey to ${state.name} to experience the local culture!`;
+  // Process news data
+  if (processedResponse.includes('[LIVE_NEWS]')) {
+    try {
+      const newsData = await liveDataService.getNews();
+      if (newsData.success) {
+        const newsText = liveDataService.formatNewsResponse(newsData.data);
+        processedResponse = processedResponse.replace('[LIVE_NEWS]', newsText);
+      } else {
+        processedResponse = processedResponse.replace(
+          '[LIVE_NEWS]', 
+          `I couldn't retrieve the latest news from India. Please try again later.`
+        );
+      }
+    } catch (error) {
+      console.error("Error processing news data:", error);
+      processedResponse = processedResponse.replace(
+        '[LIVE_NEWS]', 
+        `I'm having trouble accessing news information right now. Please try again later.`
+      );
     }
-    
-    return "India celebrates numerous festivals throughout the year. Some major ones include Diwali (Festival of Lights), Holi (Festival of Colors), Durga Puja, Ganesh Chaturthi, and many regional celebrations. I can include festival information when planning your journey to a specific state!";
   }
   
-  // Weather query with optional state
-  const weatherMatch = query.match(COMMAND_PATTERNS.WEATHER_QUERY);
-  if (weatherMatch) {
-    const stateName = weatherMatch[1];
-    if (stateName) {
-      const state = getStateDetails(stateName);
-      
-      // Very basic weather info by region
-      const weatherByRegion: {[key: string]: string} = {
-        'north-india': `${state.name} typically has hot summers (April-June), cold winters (November-February), and pleasant weather in between. The best time to visit is October-March.`,
-        'south-india': `${state.name} has a tropical climate with warm weather year-round. The best months to visit are November to February when it's cooler and less humid.`,
-        'east-india': `${state.name} experiences hot summers, moderate winters, and heavy rainfall during monsoon (June-September). October to March is ideal for visiting.`,
-        'west-india': `${state.name} has hot summers, mild winters, and receives rainfall during monsoon season. The best time to visit is between October and March.`,
-        'central-india': `${state.name} has hot summers and mild winters. Avoid the summer months (April-June) and plan your visit between October and March.`,
-        'northeast-india': `${state.name} has moderate climate with rainfall throughout the year. October to April offers the most pleasant weather for visitors.`
-      };
-      
-      return weatherByRegion[state.region] || `${state.name} has varied climate throughout the year. Generally, October to March offers the most pleasant weather for travelers.`;
+  // Process tourism data
+  if (processedResponse.includes('[LIVE_TOURISM]')) {
+    try {
+      const tourismData = await liveDataService.getTourismInfo();
+      if (tourismData.success) {
+        const tourismText = liveDataService.formatTourismResponse(tourismData.data);
+        processedResponse = processedResponse.replace('[LIVE_TOURISM]', tourismText);
+      } else {
+        processedResponse = processedResponse.replace(
+          '[LIVE_TOURISM]', 
+          `I couldn't retrieve the latest tourism information for India. Please try again later.`
+        );
+      }
+    } catch (error) {
+      console.error("Error processing tourism data:", error);
+      processedResponse = processedResponse.replace(
+        '[LIVE_TOURISM]', 
+        `I'm having trouble accessing tourism information right now. Please try again later.`
+      );
     }
-    
-    return "India's climate varies greatly: North India has hot summers (April-June) and cold winters (November-February); South India stays warm year-round with monsoons from June-September; The mountains are cool in summer and snowy in winter; The best time to visit most regions is October-March when the weather is pleasant.";
   }
   
-  if (lowerQuery.includes('pack') || lowerQuery.includes('bring')) {
-    return "For your Indian journey, pack light, breathable clothes, modest attire for religious sites, comfortable walking shoes, a hat, sunscreen, insect repellent, basic medications, and a universal adapter. Seasonal adjustments are needed - light clothes for summer, layers for winter in the north, and rain gear during monsoon season.";
-  }
-  
-  // Transport query with optional state
-  const transportMatch = query.match(COMMAND_PATTERNS.TRANSPORT_QUERY);
-  if (transportMatch) {
-    const stateName = transportMatch[1];
-    if (stateName) {
-      const state = getStateDetails(stateName);
-      
-      return `In ${state.name}, you can get around using local buses, taxis, auto-rickshaws, and ride-sharing apps. Major cities might have metro systems or special tourist buses. For a local experience, try cycle rickshaws in old city areas. Hiring a private car with driver is also popular for comfortable sightseeing.`;
+  // Process currency data
+  if (processedResponse.includes('[LIVE_CURRENCY]')) {
+    try {
+      const currencyData = await liveDataService.getCurrencyRates();
+      if (currencyData.success) {
+        const currencyText = liveDataService.formatCurrencyResponse(currencyData.data);
+        processedResponse = processedResponse.replace('[LIVE_CURRENCY]', currencyText);
+      } else {
+        processedResponse = processedResponse.replace(
+          '[LIVE_CURRENCY]', 
+          `I couldn't retrieve the current exchange rates for Indian Rupee. Please try again later.`
+        );
+      }
+    } catch (error) {
+      console.error("Error processing currency data:", error);
+      processedResponse = processedResponse.replace(
+        '[LIVE_CURRENCY]', 
+        `I'm having trouble accessing currency information right now. Please try again later.`
+      );
     }
-    
-    return "India offers diverse transportation options: flights connect major cities; extensive railway network is economical for long distances; buses reach remote areas; taxis, auto-rickshaws, and ride-sharing apps work well within cities; metro systems operate in Delhi, Mumbai, Bangalore, and other major cities. For a local experience, try cycle rickshaws in old city areas.";
   }
   
-  if (lowerQuery.includes('hello') || lowerQuery.includes('hi') || lowerQuery.includes('namaste')) {
-    return "Namaste! 🙏 I'm your Mystic India Journey Planner. How can I help plan your perfect Indian adventure today?";
-  }
-  
-  return "I can help you plan a customized journey through India! Try asking something specific like 'Plan a 5-day journey to Rajasthan' or 'Create a 3-day trip to Delhi.' I'll create an itinerary with activities, accommodations, and local experiences.";
-};
-
-export const generateNewSuggestions = (state: string, days: number): string[] => {
-  return [
-    `What are the best foods to try in ${state}?`,
-    `What should I pack for ${state}?`,
-    `Tell me about festivals in ${state}`,
-    `Plan a ${days+2}-day journey to ${getRandomState(state)}`
-  ];
+  return processedResponse;
 };
