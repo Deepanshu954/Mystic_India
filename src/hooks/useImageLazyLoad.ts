@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -29,7 +28,11 @@ const useImageLazyLoad = (
   // If on home page, state page or immediate option is true, skip lazy loading
   const skipLazyLoad = isHomePage || isStatePage || options.immediate === true || options.priority === true;
 
-  const { threshold = 0.1, rootMargin = '200px' } = options;
+  // Optimize threshold and rootMargin based on page type
+  const { 
+    threshold = isStatePage ? 0.01 : 0.1, 
+    rootMargin = isStatePage ? '500px' : '200px' 
+  } = options;
 
   const onLoad = useCallback((e?: React.SyntheticEvent<HTMLImageElement>) => {
     if (isMounted.current) {
