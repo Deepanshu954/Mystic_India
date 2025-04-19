@@ -274,12 +274,14 @@ export const stateData = [
         {
           name: 'Bihu',
           timing: 'April, January, October',
-          description: 'Three festivals marking different phases of the agricultural cycle'
+          description: 'Three festivals marking different phases of the agricultural cycle',
+          image: 'https://images.moneycontrol.com/static-mcnews/2024/04/MixCollage-13-Apr-2024-09-27-AM-4458.jpg?impolicy=website&width=1600&height=900'
         },
         {
           name: 'Ambubachi Mela',
           timing: 'June',
-          description: 'A fair at Kamakhya Temple celebrating the goddess\' menstruation'
+          description: 'A fair at Kamakhya Temple celebrating the goddess\' menstruation',
+          image: 'https://indroyc.com/wp-content/uploads/2024/06/ambabuchi-mela.jpg'
         },
         {
           name: 'Jonbeel Mela',
@@ -1392,7 +1394,7 @@ export const stateData = [
             name: 'Amritsari Kulcha',
             description: 'Stuffed bread baked in a tandoor and served with chole',
             image:
-              'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d'
+              'https://sachfoods.com/cdn/shop/articles/MultipleKulchaShot.jpg?v=1667151236'
           },
           {
             name: 'Lassi',
@@ -1411,7 +1413,7 @@ export const stateData = [
             timing: 'April',
             description: 'A harvest festival marking the Punjabi New Year',
             image:
-              'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d'
+              'https://static.toiimg.com/thumb/msid-90802194,width-1280,height-720,resizemode-4/90802194.jpg'
           },
           {
             name: 'Lohri',
@@ -1734,7 +1736,7 @@ export const stateData = [
             name: 'Aamat',
             description: 'A spicy lentil curry made with local herbs',
             image:
-              'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d'
+              'https://blog.swiggy.com/wp-content/uploads/2024/04/Aamat-1024x538.jpg'
           },
           {
             name: 'Muthia',
@@ -1771,7 +1773,7 @@ export const stateData = [
             timing: 'October',
             description: 'A 75-day festival celebrating tribal traditions',
             image:
-              'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d'
+              'https://utsav.gov.in/public/uploads/event_picture_image/event_159/1652203225499557453.jpg'
           },
           {
             name: 'Madai Festival',
@@ -2221,7 +2223,7 @@ export const stateData = [
               location: 'Aurangabad',
               description: 'UNESCO World Heritage site with rock-cut temples',
               image:
-                'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d'
+                'https://breathedreamgo.com/wp-content/uploads/2010/03/India-for-Beginners-custom-tours-5.jpg'
             },
             {
               name: 'Gateway of India',
@@ -2706,14 +2708,14 @@ export const stateData = [
                 timing: 'July/August',
                 description: 'A festival honoring the goddess Mahakali',
                 image:
-                  'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d'
+                  'https://doingsociology.org/wp-content/uploads/2023/12/Bonalu-festivities-2.jpg'
               },
               {
                 name: 'Bathukamma',
                 timing: 'September/October',
                 description: 'A floral festival celebrating the goddess Gauri',
                 image:
-                  'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d'
+                  'https://telanganatourism.gov.in/bathukamma/images/inner/about-bathkama/Main.jpg'
               }
             ]
           },
@@ -2726,7 +2728,7 @@ export const stateData = [
                 location: 'Hyderabad',
                 description: 'An iconic mosque and monument',
                 image:
-                  'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d'
+                  'https://s7ap1.scene7.com/is/image/incredibleindia/charminar-hyderabad-2-attr-hero?qlt=82&ts=1726652869975'
               },
               {
                 name: 'Golconda Fort',
@@ -3068,15 +3070,15 @@ export const stateData = [
               festivals: {
                 description: 'Chandigarh celebrates a variety of festivals reflecting its diverse cultural influences.',
                 list: [
-                  { name: 'Chandigarh Carnival', timing: 'November', description: 'A festival celebrating the city\'s culture', image: 'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d' },
-                  { name: 'Baisakhi', timing: 'April', description: 'A harvest festival celebrated with music and dance', image: 'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d' }
+                  { name: 'Chandigarh Carnival', timing: 'November', description: 'A festival celebrating the city\'s culture', image: 'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d' }
+                  
                 ]
               },
               heritage: {
                 description: 'Chandigarh\'s heritage sites include modernist architecture and urban landmarks.',
                 sites: [
                   { name: 'Rock Garden', location: 'Chandigarh', description: 'A garden made from industrial waste', image: 'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d' },
-                  { name: 'Capitol Complex', location: 'Chandigarh', description: 'A UNESCO World Heritage Site designed by Le Corbusier', image: 'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d' }
+                  { name: 'Capitol Complex', location: 'Chandigarh', description: 'A UNESCO World Heritage Site designed by Le Corbusier', image: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/Palace_of_Assembly_Chandigarh_2006.jpg' }
                 ]
               }
             },
@@ -3253,7 +3255,7 @@ export const stateData = [
               festivals: {
                 description: 'The region celebrates a variety of festivals reflecting its cultural heritage.',
                 list: [
-                  { name: 'Bahu Mela', timing: 'March/April', description: 'A fair held at Bahu Fort', image: 'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d' }
+                  { name: 'Bahu Mela', timing: 'March/April', description: 'A fair held at Bahu Fort', image: 'https://www.hlimg.com/images/events/738X538/event_1538637880m2.jpg?w=400&dpr=2.6' }
                 ]
               },
               heritage: {
@@ -3343,13 +3345,12 @@ export const stateData = [
               festivals: {
                 description: 'The islands celebrate a variety of festivals reflecting their cultural heritage.',
                 list: [
-                  { name: 'Bakrid', timing: 'Varies', description: 'A festival celebrating the end of Ramadan', image: 'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d' }
                 ]
               },
               heritage: {
                 description: 'Lakshadweep\'s heritage sites include natural landmarks and cultural monuments.',
                 sites: [
-                  { name: 'Agatti Island', location: 'Lakshadweep', description: 'A scenic island with coral reefs', image: 'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d' },
+                  { name: 'Agatti Island', location: 'Lakshadweep', description: 'A scenic island with coral reefs', image: 'https://images.wanderon.in/blogs/new/2024/05/agatti-airport-lakshadweep.jpg' },
                   { name: 'Minicoy Island', location: 'Lakshadweep', description: 'Known for its lighthouse and beaches', image: 'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d' }
                 ]
               }
@@ -3388,14 +3389,14 @@ export const stateData = [
               festivals: {
                 description: 'Puducherry celebrates a variety of festivals reflecting its cultural diversity.',
                 list: [
-                  { name: 'Bastille Day', timing: 'July', description: 'A celebration of French heritage', image: 'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d' }
+                  { name: 'Bastille Day', timing: 'July', description: 'A celebration of French heritage', image: 'https://cdn.britannica.com/49/195649-050-6F60E967/Military-parade-Paris-Champs-Elysees-Bastille-Day-2012.jpg' }
                 ]
               },
               heritage: {
                 description: 'Puducherry\'s heritage sites include colonial buildings and spiritual retreats.',
                 sites: [
                   { name: 'Promenade Beach', location: 'Puducherry', description: 'A scenic beachfront with colonial architecture', image: 'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d' },
-                  { name: 'Auroville', location: 'Puducherry', description: 'An experimental township promoting universal peace', image: 'https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d' }
+                  { name: 'Auroville', location: 'Puducherry', description: 'An experimental township promoting universal peace', image: 'https://static.toiimg.com/photo/99391969.cms' }
                 ]
               }
             },
