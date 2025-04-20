@@ -2,7 +2,7 @@
 
 Mystic India is not just a web application—it’s a captivating cultural odyssey. Step into the heart of India and experience her timeless traditions, vivid festivals, authentic cuisines, and ancient heritage skills. From the snow-clad Himalayas to the vibrant coasts of Kerala, Mystic India bridges the geographical and cultural gaps, offering users an immersive, interactive platform to explore the soul of every Indian state.
 
-Discover hidden gems through tours, savor local delicacies, engage with indigenous arts, and celebrate India’s unmatched diversity, all in one seamless experience.
+Discover hidden gems through virtual tours, savor local delicacies, engage with indigenous arts, and celebrate India’s unmatched diversity, all in one seamless experience.
 
 ## 🌐  [Live Demo](https://mystic-india.netlify.app/)
 
