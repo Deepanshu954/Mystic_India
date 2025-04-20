@@ -1931,7 +1931,7 @@ export const stateData = [
           name: "Chhilka Roti",
           description: "Thin rice pancakes served with curries",
           image:
-            "https://cookwithrenu.com/wp-content/uploads/2020/09/Chilka-Roti_1.jpg.webp",
+            "https://c.ndtvimg.com/2023-09/vkbc9728_appam_625x300_19_September_23.jpg",
         },
       ],
     },
@@ -2712,7 +2712,7 @@ export const stateData = [
           location: "East Sikkim",
           description: "A glacial lake surrounded by mountains",
           image:
-            "https://travelsetu.com/apps/uploads/new_destinations_photos/destination/2023/12/12/f09dff586c1bc6922554274fb5a451db_1000x1000.jpg",
+            "https://res.cloudinary.com/kmadmin/image/upload/v1726556508/kiomoi/Tsomgo_Lake_Sikkim_9453.jpg",
         },
       ],
     },
@@ -3675,7 +3675,7 @@ export const stateData = [
           name: "Paratha",
           description: "Stuffed flatbread served with pickles",
           image:
-            "https://rookiewithacookie.com/wp-content/uploads/2020/05/IMG_2570.jpg",
+            "https://www.awesomecuisine.com/wp-content/uploads/2016/04/Cheese-Paratha.jpg",
         },
       ],
     },
