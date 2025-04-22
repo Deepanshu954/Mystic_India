@@ -304,6 +304,7 @@ export const stateData = [
           timing: "January",
           description:
             "A traditional fair with barter trade and cultural programs",
+          image: "https://images.hindustantimes.com/rf/image_size_960x540/HT/p2/2017/01/21/Pictures/_2acf7dce-df97-11e6-84f6-f9b2ee092ea6.jpg",
         },
       ],
     },
@@ -701,7 +702,7 @@ export const stateData = [
           name: "Dosa",
           description:
             "Crispy fermented rice and lentil crepes often stuffed with fillings",
-          image: "https://images.unsplash.com/photo-1627894483216-2138af692e32",
+          image: "https://www.awesomecuisine.com/wp-content/uploads/2009/06/Plain-Dosa.jpg",
         },
         {
           name: "Chettinad Chicken",
@@ -709,13 +710,6 @@ export const stateData = [
             "A fiery chicken curry with complex spices from the Chettinad region",
           image:
             "https://myfoodstory.com/wp-content/uploads/2016/02/spicy-chettinad-pepper-chicken-fryroast-recipe.1024x1024-3.jpg",
-        },
-        {
-          name: "Pongal",
-          description:
-            "A comfort dish of rice and lentils, prepared in both sweet and savory varieties",
-          image:
-            "https://www.indianveggiedelight.com/wp-content/uploads/2021/11/ven-pongal-featured.jpg",
         },
       ],
     },
@@ -729,7 +723,7 @@ export const stateData = [
           description:
             "A four-day harvest festival thanking the sun god for agricultural abundance",
           image:
-            "https://images.unsplash.com/photo-1612863750372-50c1252b8c58?q=80&w=1974",
+            "https://i0.wp.com/www.easeindiatrip.com/blog/wp-content/uploads/2024/12/Pongal-Festival-02.jpg?resize=1200%2C675&ssl=1",
         },
         {
           name: "Thai Pusam",
@@ -744,8 +738,7 @@ export const stateData = [
           timing: "April/May",
           description:
             "A 10-day celebration of the divine wedding of Goddess Meenakshi and Lord Sundareswarar",
-          image:
-            "https://images.unsplash.com/photo-1589494870900-75f4568b69e0?q=80&w=1974",
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnmKHkLJ9tgg6WgsD2lzfisVz7MjcbKVYMdA&s",
         },
         {
           name: "Mahamaham",
@@ -753,7 +746,7 @@ export const stateData = [
           description:
             "A massive bathing festival at Kumbakonam's tank, considered equivalent to bathing in all sacred rivers",
           image:
-            "https://images.unsplash.com/photo-1594815101424-0c644c8c63c6?q=80&w=1974",
+            "https://www.trawell.in/admin/images/upload/868291335Kumbakonam_Mahamaham_Tank_Main.jpg",
         },
       ],
     },
@@ -878,7 +871,7 @@ export const stateData = [
           description:
             "A dish of rice lentils and vegetables, spiced with local mountain herbs",
           image:
-            "https://i.pinimg.com/474x/0c/06/99/0c069904c0aca50ec1671ee676657641.jpg",
+            "https://i.ytimg.com/vi/_f9iU50sg9c/maxresdefault.jpg",
         },
       ],
     },
@@ -895,14 +888,6 @@ export const stateData = [
             "https://i.pinimg.com/736x/f2/ff/a6/f2ffa621df9c750f9dfef996a0aba5dd.jpg",
         },
         {
-          name: "Losar",
-          timing: "February/March",
-          description:
-            "Tibetan New Year celebrated in the Buddhist regions with mask dances and prayer ceremonies",
-          image:
-            "https://i.pinimg.com/736x/bb/c6/d8/bbc6d8cc437a8820dfce3175a0509e5c.jpg",
-        },
-        {
           name: "Shivratri Fair",
           timing: "February/March",
           description:
@@ -916,7 +901,7 @@ export const stateData = [
           description:
             "An ancient festival in Chamba celebrating good harvest, with cultural performances",
           image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLDQxK8EWFfcMZdcKfRUwgGDmARmyQW86ToQ&s",
+            "https://www.villagesquare.in/wp-content/uploads/2024/10/03-1.jpg",
         },
       ],
     },
@@ -1071,17 +1056,13 @@ export const stateData = [
           timing: "February/March",
           description:
             "A colorful pre-Lenten festival with parades, music, and dance",
+          image: "https://www.hindustantimes.com/ht-img/img/2025/02/18/1600x900/Goa_carnival_2025_1739864444449_1739864475544.jpg",
         },
         {
           name: "Feast of St. Francis Xavier",
           timing: "December",
           description: "A religious festival honoring the patron saint of Goa",
           image: "https://www.catholicnewsagency.com/images/saints/st-francis-xavier-406.jpg",
-        },
-        {
-          name: "Shigmo",
-          timing: "March/April",
-          description: "A spring festival with folk dances and processions",
         },
         {
           name: "Zagor",
@@ -1208,6 +1189,7 @@ export const stateData = [
           name: "Navratri",
           timing: "September/October",
           description: "Nine nights of Garba and Dandiya Raas dances",
+          image: "https://theunitedindian.com/images/navratra-09-04-24-hero.webp",
         },
         {
           name: "Uttarayan",
@@ -1220,6 +1202,7 @@ export const stateData = [
           timing: "November to February",
           description:
             "A cultural festival showcasing the beauty of the Rann of Kutch",
+          image: "https://vardhmanvacations.com/blog/wp-content/uploads/2025/02/rann-utsav-2025.jpg",
         },
       ],
     },
@@ -1339,6 +1322,7 @@ export const stateData = [
           timing: "September/October",
           description:
             "A grand festival featuring processions and cultural programs",
+          image: "https://i0.wp.com/thestrongtraveller.com/wp-content/uploads/2022/10/mysore-dussehra-festival-procession.jpg?fit=1080%2C675&ssl=1",
         },
         {
           name: "Ugadi",
@@ -1352,6 +1336,7 @@ export const stateData = [
           timing: "April",
           description:
             "A festival honoring the goddess Draupadi with processions",
+          image: "https://d18x2uyjeekruj.cloudfront.net/wp-content/uploads/2022/04/karaga.jpg",
         },
       ],
     },
@@ -1446,7 +1431,7 @@ export const stateData = [
         {
           name: "Mishti Doi",
           description: "Sweetened yogurt made with jaggery",
-          image: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8",
+          image: "https://aahaaramonline.com/wp-content/uploads/2015/10/Bengali_Mishti_Doi.png",
         },
         {
           name: "Chingri Malai Curry",
@@ -1469,11 +1454,13 @@ export const stateData = [
           name: "Kali Puja",
           timing: "October/November",
           description: "A festival honoring the goddess Kali",
+          image: "https://www.thestatesman.com/wp-content/uploads/2018/11/Kali-Puja-1.jpg",
         },
         {
           name: "Poush Parbon",
           timing: "December/January",
           description: "A harvest festival celebrated with traditional sweets",
+          image: "https://static.toiimg.com/imagenext/toiblogs/photo/blogs/wp-content/uploads/2019/02/4-1.jpg",
         },
       ],
     },
@@ -1548,7 +1535,7 @@ export const stateData = [
         {
           name: "Chhena Poda",
           description: "A caramelized sweet made with cottage cheese and sugar",
-          image: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8",
+          image: "https://anotherglobaleater.wordpress.com/wp-content/uploads/2023/04/chhenapoda.jpg?w=1200",
         },
         {
           name: "Dalma",
@@ -1587,11 +1574,13 @@ export const stateData = [
           timing: "June/July",
           description:
             "A grand chariot festival in Puri celebrating Lord Jagannath",
+          image: "https://img.manoramayearbook.in/content/dam/yearbook/learn/world/images/2024/july/rath-yatra-7b.jpg",
         },
         {
           name: "Nuakhai",
           timing: "August/September",
           description: "A harvest festival celebrated in western Odisha",
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3TFxVkOvWSeVeCHd7wfEp-BGIF8Oq954Jtg&s",
         },
         {
           name: "Dola Purnima",
@@ -1694,7 +1683,7 @@ export const stateData = [
           description:
             "A refreshing yogurt-based drink, often sweetened or flavored",
           image:
-            "https://www.sharmispassions.com/wp-content/uploads/2023/08/sweet-lassi3.jpg",
+            "https://thepinchoftaste.com/assets/images/blogs/Lassi__2021_05_11_06_06_25.jpeg",
         },
       ],
     },
@@ -1712,13 +1701,13 @@ export const stateData = [
           name: "Lohri",
           timing: "January",
           description: "A winter harvest festival celebrated with bonfires",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://www.mypoojabox.in/cdn/shop/articles/The_Bonfire_Festival_Lohri_Celebrate_in_a_My_Pooja_Box_Way_a30a930e-8a04-4b18-bb90-d87f3b36ed7b_1100x.jpg?v=1610465051",
         },
         {
           name: "Holi",
           timing: "March",
           description: "The festival of colors celebrated with music and dance",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://i.natgeofe.com/k/aa3a7720-96bd-4bb7-b765-226d052b354e/holi-kids-in-circle_2x1.jpg",
         },
       ],
     },
@@ -1826,7 +1815,7 @@ export const stateData = [
           name: "Kumbh Mela",
           timing: "Every 12 years",
           description: "A massive Hindu pilgrimage and bathing festival",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://c.ndtvimg.com/2024-12/nqmi678o_mahakumbh-2025-_625x300_08_December_24.jpeg?im=FaceCrop,algorithm=dnn,width=1200,height=738",
         },
         {
           name: "Dev Deepawali",
@@ -1944,13 +1933,7 @@ export const stateData = [
           name: "Sarhul",
           timing: "March/April",
           description: "A tribal festival celebrating the Sal tree blossom",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
-        },
-        {
-          name: "Karma",
-          timing: "August/September",
-          description: "A tribal festival honoring the Karma tree",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQdOFeuIO2M-5TPrXyI0f2wHH00sSQDRAJ7w&s",
         },
         {
           name: "Tusu Parab",
@@ -2067,14 +2050,14 @@ export const stateData = [
           name: "Madai Festival",
           timing: "December/January",
           description: "A tribal festival with music, dance, and rituals",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlNUd0vfs5Kv4mf5YFzugyuQjexY2b9-5FJw&s",
         },
         {
           name: "Nagpanchami",
           timing: "July/August",
           description:
             "A festival honoring snakes and their role in agriculture",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://assets.mypandit.com/wp-content/uploads/2021/04/nag-panchami.webp",
         },
       ],
     },
@@ -2188,7 +2171,7 @@ export const stateData = [
           timing: "November",
           description:
             "A festival where married women visit their parents' homes",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/05dhiti/ningolchakouba/ningolchakouba2.webp",
         },
         {
           name: "Cheiraoba",
@@ -2295,7 +2278,7 @@ export const stateData = [
           timing: "Winter",
           description:
             "A festival celebrating the bond between brothers and sisters",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://www.madhepuraabtak.com/wp-content/uploads/2017/11/Sama-Chakeva-Visarjana.jpg",
         },
       ],
     },
@@ -2389,7 +2372,7 @@ export const stateData = [
           name: "Khajuraho Dance Festival",
           timing: "February",
           description: "A festival showcasing classical dance forms",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJT_02SQxyMSgA_nAaz6SqsvNzyOqj8NDK1w&s",
         },
         {
           name: "Tansen Music Festival",
@@ -2495,7 +2478,7 @@ export const stateData = [
           timing: "March/April",
           description:
             "Maharashtrian New Year celebrated with traditional foods",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://chrysalishigh.com/wp-content/uploads/2024/04/gudi-padwa.jpg",
         },
       ],
     },
@@ -2588,13 +2571,13 @@ export const stateData = [
           timing: "December",
           description:
             "A festival showcasing Naga culture through music and dance",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://northeastlive.s3.amazonaws.com/media/uploads/2024/11/hornbill.png",
         },
         {
           name: "Moatsu Festival",
           timing: "May",
           description: "A festival celebrating the harvest season",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8VNocEqLXQSopbstIY1TYf2RplLZYp3S1Vg&s",
         },
       ],
     },
@@ -2688,13 +2671,13 @@ export const stateData = [
           timing: "May/June",
           description:
             "A festival celebrating Buddha's birth, enlightenment, and death",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://www.ruralindiaonline.org/media/images/01-_AMI1711-RM.max-1000x500.jpg",
         },
         {
           name: "Losar",
           timing: "February/March",
           description: "Tibetan New Year celebrated with prayer ceremonies",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://www.lchangnang.com/blog/wp-content/uploads/2023/11/Losar-Festival.webp",
         },
       ],
     },
@@ -2785,7 +2768,7 @@ export const stateData = [
           name: "Kharchi Puja",
           timing: "July",
           description: "A festival honoring the tribal goddesses",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://resize.indiatvnews.com/en/centered/newbucket/1200_675/2024/07/befunky-collage-2024-07-14t171202-1720957327.webp",
         },
         {
           name: "Garia Puja",
@@ -2883,7 +2866,7 @@ export const stateData = [
           name: "Nongkrem Dance Festival",
           timing: "November",
           description: "A festival celebrating the harvest season",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ5sZrunFMyt6mS5daD-GEzJCO08IX82mmrA&s",
         },
         {
           name: "Wangala Festival",
@@ -3081,13 +3064,13 @@ export const stateData = [
           name: "Kumbh Mela",
           timing: "Every 12 years",
           description: "A massive Hindu pilgrimage held in Haridwar",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://scienceindiamag.in/wp-content/uploads/2025/01/shutterstock_429353161-scaled.jpg",
         },
         {
           name: "Phool Dei",
           timing: "March/April",
           description: "A spring festival celebrating nature",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://c.ndtvimg.com/2023-03/fvjt6fe8_phool-dei-puja-muhurt_625x300_14_March_23.jpg",
         },
       ],
     },
@@ -3177,7 +3160,7 @@ export const stateData = [
           name: "Gugga Navami",
           timing: "August/September",
           description: "A festival honoring the snake god Gugga",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://www.india.com/wp-content/uploads/2022/08/Collage-Maker-18-Aug-2022-10.55-AM-1.jpg",
         },
       ],
     },
@@ -3274,7 +3257,7 @@ export const stateData = [
           name: "Mim Kut",
           timing: "August/September",
           description: "A festival honoring the maize harvest",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://i0.wp.com/www.travelholidaysindia.com/wp-content/uploads/2024/08/Mim-Kut-Festival-Nagaland.jpg?fit=1000%2C563&ssl=1",
         },
       ],
     },
@@ -3423,12 +3406,6 @@ export const stateData = [
       description:
         "Chandigarh's cuisine is heavily influenced by Punjabi food, with a focus on rich and flavorful dishes.",
       dishes: [
-        {
-          name: "Butter Chicken",
-          description: "A rich and creamy chicken dish",
-          image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEaRAKjKFyUBOdQUp70eeOoaJQB3h8ddhJ2Q&s",
-        },
         {
           name: "Chole Bhature",
           description: "Spicy chickpeas served with fried bread",
@@ -3658,7 +3635,7 @@ export const stateData = [
           name: "Butter Chicken",
           description: "A rich and creamy chicken dish",
           image:
-            "https://www.indianhealthyrecipes.com/wp-content/uploads/2023/04/butter-chicken-recipe.jpg",
+            "https://www.allrecipes.com/thmb/SIgWrOI85-BlVbtGgUeew-77B7o=/0x512/filters:no_upscale():max_bytes(150000):strip_icc()/AR-141169-Easy-Indian-Butter-Chicken-DDMFS-4x3-beauty-588ff54d1e0f4a0788906e851e27d540.jpg",
         },
         {
           name: "Paratha",
@@ -3677,7 +3654,7 @@ export const stateData = [
           timing: "January",
           description:
             "A grand parade showcasing India's military and cultural heritage",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://bsmedia.business-standard.com/_media/bs/img/article/2023-06/27/full/1687844973-2256.jpg",
         },
         {
           name: "Diwali",
@@ -3837,7 +3814,7 @@ export const stateData = [
           name: "Hemis Festival",
           timing: "June/July",
           description: "A festival celebrating the birth of Guru Padmasambhava",
-          image: "https://images.unsplash.com/photo-1627578842045-9f2a6b4e8c9d",
+          image: "https://images.indianexpress.com/2023/06/hemis-new.png",
         },
       ],
     },
