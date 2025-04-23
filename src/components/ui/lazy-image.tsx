@@ -34,7 +34,7 @@ const LazyImage = memo(({
   // Skip lazy loading animation on home page, state pages, or when immediate prop is true
   const skipLazyEffects = isHomePage || isStatePage || immediate === true || priority === true;
   
-  const { imageSrc, setImageRef, onLoad, onError } = useImageLazyLoad(
+  const { imageSrc, imageRef, onLoad, onError } = useImageLazyLoad(
     src,
     placeholderSrc,
     { 
@@ -73,7 +73,7 @@ const LazyImage = memo(({
   return (
     <div className={cn("relative overflow-hidden", className)}>
       <img
-        ref={setImageRef}
+        ref={imageRef}
         src={imageSrc}
         alt={alt}
         onLoad={handleLoad}

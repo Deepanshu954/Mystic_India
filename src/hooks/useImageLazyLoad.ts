@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -14,7 +15,7 @@ const useImageLazyLoad = (
   options: UseImageLazyLoadOptions = {}
 ) => {
   const [imageSrc, setImageSrc] = useState(options.priority || options.immediate ? src : placeholderSrc);
-  const [imageRef, setImageRef] = useState<HTMLImageElement | null>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
   const [isLoaded, setIsLoaded] = useState(options.priority || false);
   const [hasError, setHasError] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -108,7 +109,7 @@ const useImageLazyLoad = (
       return;
     }
 
-    if (imageRef && !isLoaded) {
+    if (imageRef.current && !isLoaded) {
       // Cleanup previous observer
       if (observerRef.current) {
         observerRef.current.disconnect();
@@ -140,8 +141,8 @@ const useImageLazyLoad = (
                 };
                 
                 // Stop watching once the entry is detected
-                if (observerRef.current && imageRef) {
-                  observerRef.current.unobserve(imageRef);
+                if (observerRef.current && imageRef.current) {
+                  observerRef.current.unobserve(imageRef.current);
                 }
               }
             });
@@ -151,7 +152,7 @@ const useImageLazyLoad = (
             rootMargin, // Increased to start loading earlier
           }
         );
-        observerRef.current.observe(imageRef);
+        observerRef.current.observe(imageRef.current);
       } else {
         // Fallback for browsers that don't support IntersectionObserver
         setImageSrc(src);
@@ -160,12 +161,12 @@ const useImageLazyLoad = (
 
     return () => {
       didCancel = true;
-      if (observerRef.current && imageRef) {
-        observerRef.current.unobserve(imageRef);
+      if (observerRef.current && imageRef.current) {
+        observerRef.current.unobserve(imageRef.current);
         observerRef.current.disconnect();
       }
     };
-  }, [src, imageRef, isLoaded, threshold, rootMargin, onError, skipLazyLoad]);
+  }, [src, isLoaded, threshold, rootMargin, onError, skipLazyLoad]);
 
   useEffect(() => {
     return () => {
@@ -173,7 +174,7 @@ const useImageLazyLoad = (
     };
   }, []);
 
-  return { imageSrc, setImageRef, isLoaded, onLoad, onError };
+  return { imageSrc, imageRef, isLoaded, onLoad, onError };
 };
 
 export default useImageLazyLoad;
