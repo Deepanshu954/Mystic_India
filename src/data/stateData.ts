@@ -2096,7 +2096,7 @@ export const stateData = [
     description:
       "Manipur, located in northeastern India, is known for its scenic beauty, vibrant culture, and martial arts. The state offers a unique blend of traditions and natural wonders.",
     bannerImage:
-      "https://travelsetu.com/apps/uploads/new_destinations_photos/destination/2024/01/18/41382e8a00fb64504e33762e52d83b21_1000x1000.jpg",
+      "https://c1.wallpaperflare.com/path/60/388/879/nature-panoramic-mountain-landscape-sky-travel-db3a8070fdb4536abdf28127c5d79614.jpg",
     famousFor: [
       "Loktak Lake",
       "Keibul Lamjao National Park",
@@ -2378,7 +2378,7 @@ export const stateData = [
           name: "Tansen Music Festival",
           timing: "November",
           description: "A festival honoring the legendary musician Tansen",
-          image: "https://mpholidays.com/wp-content/uploads/2023/01/Tansen-Samaroh.jpg",
+          image: "https://www.adotrip.com/public/images/events/master_images/638ec46b48085-Tansen_Music_Festival_Attractions.jpg",
         },
       ],
     },
