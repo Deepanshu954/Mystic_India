@@ -49,7 +49,7 @@ export const stateData = [
           name: "Gongura Pachadi",
           description: "A tangy chutney made with sorrel leaves",
           image:
-            "https://www.archanaskitchen.com/images/archanaskitchen/0-Archanas-Kitchen-Recipes/2018/Andhra_Gongura_Pachadi_Recipe_-_Andhra_Style_Sorrel_Leaves_Chutney-10.jpg",
+            "https://www.sgr777foods.com/wp-content/uploads/2025/05/Gongura-Pickle-Recipe.webp",
         },
         {
           name: "Hyderabadi Biryani",
@@ -2020,7 +2020,7 @@ export const stateData = [
           name: "Bafauri",
           description: "Deep-fried lentil fritters",
           image:
-            "https://www.archanaskitchen.com/images/archanaskitchen/1-Author/nithya.anantham/Steamed_Bafauri_Recipe_Bhojpuri_Style_Steamed_Chana_Dal_Balls.jpg",
+            "https://www.mymahanagar.com/wp-content/uploads/2025/05/Tanvi-1200-x-900-px-2025-05-22T182715.746.jpg",
         },
         {
           name: "Chila",
@@ -2354,7 +2354,7 @@ export const stateData = [
           name: "Bhutte ka Kees",
           description: "Grated corn roasted with spices",
           image:
-            "https://www.archanaskitchen.com/images/archanaskitchen/0-Affiliate-Articles/Bhutte_Ka_Kees_Recipes_Savory_Corn_Pudding-4.jpg",
+            "https://dinedelicious.in/wp-content/uploads/2020/10/Bhutte-ka-kees-rp--500x500.jpg",
         },
         {
           name: "Dal Bafla",
@@ -2491,7 +2491,7 @@ export const stateData = [
           location: "Aurangabad",
           description: "UNESCO World Heritage site with rock-cut temples",
           image:
-            "https://theheritageart.com/wp-content/uploads/2022/11/Ellora-caves.jpeg",
+            "https://breathedreamgo.com/wp-content/uploads/2010/03/India-for-Beginners-custom-tours-5.jpg",
         },
         {
           name: "Gateway of India",
@@ -2744,7 +2744,7 @@ export const stateData = [
         {
           name: "Berma",
           description: "Fermented fish used as a condiment",
-          image: "https://boroktimes.com/storage/2023/07/Berma.jpg",
+          image: "https://www.onmycanvas.com/wp-content/uploads/2020/12/shan-traditional-meal-burmese-food.jpeg",
         },
         {
           name: "Wahan Mosdeng",
@@ -2971,7 +2971,7 @@ export const stateData = [
           name: "Bathukamma",
           timing: "September/October",
           description: "A floral festival celebrating the goddess Gauri",
-          image: "https://telanganatourism.gov.in/bathukamma/images/inner/about-bathkama/Main.jpg",
+          image: "https://substackcdn.com/image/fetch/$s_!VYsA!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F040d0f5e-570f-4dcd-8ca9-d496a1716efe_500x331.jpeg",
         },
       ],
     },
@@ -3136,7 +3136,7 @@ export const stateData = [
           name: "Bathua Raita",
           description: "Yogurt mixed with bathua leaves",
           image:
-            "https://www.archanaskitchen.com/images/archanaskitchen/1-Author/Madhuli_Ajay/Bathua_Raita_Recipe_1.jpg",
+            "https://www.enhanceyourpalate.com/wp-content/uploads/Bathua-Ka-Raita-Delicious-Yogurt-Recipe.jpg",
         },
         {
           name: "Kachri ki Sabzi",
